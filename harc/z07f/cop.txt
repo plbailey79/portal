@@ -1,0 +1,34 @@
+// cop.cpp : copy original file ori to target file trg
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+
+#pragma warning(disable: 4996)  // Disable (nonstandard) "deprecated" warning
+#pragma warning(disable: 4267)  // Disable (nonstandard) int len=strlen(str) warning
+
+void cop(FILE *ori,FILE *trg)
+{ int chr;
+  while (1)
+  { chr = fgetc(ori);
+    if (chr == EOF) break;
+    fputc(chr,trg); } }
+
+int main(int argc, char* argv[])
+{ FILE *ori,*trg;
+  if (argc<3)
+  { printf("COP <ori file> <targ file>\n");
+    return 0; }
+  ori = fopen(argv[1],"rb");
+  if (!ori)
+  { printf("Unable to open ori file %s\n",argv[1]);
+    return 1; }
+  trg = fopen(argv[2],"wb");
+  if (!trg)
+  { printf("Unable to open trg file %s\n",argv[2]);
+    fclose(ori);
+    return 2; }
+  cop(ori,trg);
+  fclose(trg);
+  fclose(ori);
+	return 0; }

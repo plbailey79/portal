@@ -1,0 +1,113 @@
+// feistel.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#pragma warning(disable: 4267)
+#pragma warning(disable: 4996)
+
+#define ROUNDS 6
+
+typedef unsigned __int64 DAT;
+typedef unsigned __int32 WRD;
+typedef unsigned __int8  BYT;
+
+typedef union
+{ DAT dat;
+  WRD wrd[2];
+  BYT byt[8];
+} BLK;
+
+bool decflg=0;
+
+char chrprt(char chr)
+{ if (chr>= ' ' && chr <='~') return chr;
+  return '.'; }
+
+WRD wrdrot(WRD wrd,int k)
+{ k%=32;
+  if (k<0) k+=32;
+  return (wrd<<k) | (wrd>>(32-k)); }
+
+WRD keyrnd(WRD key,int rnd)
+{ if (decflg) rnd=ROUNDS-(rnd+1);
+  return wrdrot(key,rnd); }
+
+WRD keymak(char* str)
+{ if (*str=='-') 
+  { decflg=true;
+    str++; }
+  return WRD(_atoi64(str)); }
+
+bool getblk(FILE* ori,BLK& blk)
+{ int chr;
+  int ctr=0;
+  blk.dat=0;
+  while (ctr<8)
+  { chr=fgetc(ori);
+    if (chr==EOF) return ctr?true:false;
+    blk.byt[ctr++]=chr; }
+  return true; }
+
+void putblk(FILE* trg,BLK& blk)
+{ int ctr=0;
+  while (ctr<8) fputc(blk.byt[ctr++],trg); }
+
+void shwblk(BLK blk)
+{ int i=0;
+  for (i=0; i<8; i++)
+  { printf("%c",chrprt(blk.byt[i])); }
+  printf("  ");
+  for (i=0; i<8; i++)
+  { printf("%02X ",blk.byt[i]); }
+  printf("\n"); }
+
+WRD encwrd(WRD wrd,WRD ker)
+{ return WRD(wrd+ker); }
+
+void encblk(BLK& blk,WRD key)
+{ WRD wrd=0;
+  int rnd=0;
+  for (rnd=0; rnd<ROUNDS; rnd++)
+  { shwblk(blk);
+    wrd=blk.wrd[1]; // left=wrd[1]  right=wrd[0]
+    blk.wrd[1]=blk.wrd[0];
+    blk.wrd[0]=wrd^encwrd(blk.wrd[0],keyrnd(key,rnd)); }
+  wrd=blk.wrd[0];
+  blk.wrd[0]=blk.wrd[1];
+  blk.wrd[1]=wrd; 
+  shwblk(blk); 
+  printf("\n"); }
+  
+void feistel(FILE *ori,FILE *trg,WRD key)
+{ int cnt=0;
+  BLK blk;
+  while (getblk(ori,blk))
+  { encblk(blk,key);
+    putblk(trg,blk); } }
+
+int main(int argc, char* argv[])
+{ FILE* ori;
+  FILE* trg;
+  WRD key;
+  if (argc < 4)
+  { printf("feistel <original file> <target file> <key>\n");
+    return 0; }
+  ori = fopen(argv[1],"rb");
+  if (!ori)
+  { printf("Cannot open original file %s\n",argv[1]);
+    return 1; }
+  trg = fopen(argv[2],"wb");
+  if (!trg)
+  { printf("Cannot open target file %s\n",argv[2]);
+    fclose(ori);
+    return 1; }
+  key=keymak(argv[3]);
+  printf("key: %d  %c\n",key,decflg?'*':' ');
+  feistel(ori,trg,key);
+  fclose(trg);
+  fclose(ori);
+	return 0; }

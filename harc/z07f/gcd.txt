@@ -1,0 +1,23 @@
+// gcd.cpp : find and print the gcd of two integers
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+
+int gcd(unsigned int n,unsigned int m)
+{ int r=n%m;
+  if (r) return gcd(m,r);
+  return m; }
+
+int main(int argc, char* argv[])
+{ int m,n,d;
+  if (argc<3)
+  { printf("gcd <first integer> <second integer>\n");
+    return 0; }
+  m=atoi(argv[1]);
+  n=atoi(argv[2]);
+  if (m<0) m=-m;
+  if (n<0) n=-n;
+  d=gcd(m,n);
+  printf("gcd(%d,%d)=%d\n",m,n,d);
+	return 0; }

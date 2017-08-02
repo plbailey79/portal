@@ -1,0 +1,93 @@
+\documentclass{amsart}
+
+\include{M306} % Macro File
+
+\begin{document}
+
+\title{Group Theory}
+\author{Student Name Here}
+\address{Department of Mathematics and CSci\\
+         Southern Arkansas University}
+\email{youremail@saumag.edu}
+\date{\today}
+
+\maketitle
+
+\section{Groups}
+
+\begin{Def}
+A {\em group} $(G,\cdot)$ is a set $G$ together with a binary operation
+\[ \cdot : G \cross G \to G \]
+such that
+\begin{itemize}
+\ITEM{G1} $(g_1 g_2) g_3 = g_1(g_2 g_3)$ for every $g_1,g_2,g_3 \in G$;
+\ITEM{G2} there exists $1 \in G$ such that $g \cdot 1 = 1 \cdot g = g$ for every $g \in G$;
+\ITEM{G3} for every $g \in G$ there exists $g^{-1} \in G$ such that $g g^{-1} = g^{-1} g = 1$.
+\end{itemize}
+\end{Def}
+
+\begin{Def}
+A group $G$ is {\em abelian} if $g_1 g_2 = g_2 g_1$ for every $g_1,g_2 \in G$.
+\end{Def}
+
+\begin{Prop}
+Let $G$ be a group such that $g^2 = 1$ for every $g \in G$.
+Then $G$ is abelian.
+\end{Prop}
+
+\begin{proof}
+Type proof here.
+\end{proof}
+
+Type examples here.
+
+\newpage % this inserts a page break
+
+\section{Subgroups}
+
+\begin{Def}
+Let $G$ be a group and let $H \subset G$.  We say that $H$ is a {\em subgroup} of $G$,
+and write $H \le G$, if
+\begin{itemize}
+\ITEM{S0} $H$ is nonempty;
+\ITEM{S1} $h_1,h_2 \in H$ implies $h_1 h_2 \in H$;
+\ITEM{S2} $h \in H$ implies $h^{-1} \in H$.
+\end{itemize}
+\end{Def}
+
+\begin{Prob}
+Let $G$ be a group and let $\scr{H}$ be a collection of subgroups of $G$.
+The {\em intersection} of $\scr{H}$ is
+\[ \cap \scr{H} = \{ h \in G \mid h \in H \text{ for every } H \in \scr{H} \} . \]
+Then $\cap \scr{H} \le G$.
+\end{Prob}
+
+\begin{Prob}
+Let $G$ be a group.  The {\em center} of $G$ is
+\[ Z(G) = \{ h \in G \mid hg = gh \text{ for all } g \in G \} . \]
+Then $Z(G) \le G$.
+\end{Prob}
+
+\begin{Prob}
+Let $G$ be a group, $g \in G$, and $H \le G$.
+The {\em centralizer} of $G$ in $H$ is
+\[ C_H(g) = \{ h \in H \mid hg = gh \} . \]
+Then $C_H(g) \le G$.
+\end{Prob}
+
+\begin{Prob}
+Let $G$ be a group and $H,K \le G$.
+The {\em normalizer} of $K$ in $H$ is
+\[ N_H(K) = \{ h \in H \mid hK = Kh \} . \]
+Then $N_H(K) \le G$.
+\end{Prob}
+
+\section{Cyclic Groups}
+
+Type definition and theory here.
+
+\section{Next Section}
+
+Continue building all significant theory, peppered with examples.
+
+\end{document}

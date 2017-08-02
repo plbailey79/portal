@@ -1,0 +1,47 @@
+// euphor.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+
+typedef unsigned int UNT;
+
+int euphor(UNT a,UNT b,int& x,int& y)
+{ int n=a,m=b,q,r,s=0,t=0,u=1,v=0;
+  x=0; y=1;
+  while (n%m)
+  { q=n/m;
+    r=n%m;
+    s=x;
+    t=y;
+    x=u-x*q;
+    y=v-y*q;
+    u=s;
+    v=t;
+    n=m;
+    m=r; }
+  return m; }
+
+int euphor(int m,int n,int& x,int& y)
+{ UNT a=UNT(m),b=UNT(n);
+  int d=0;
+  if (m == 0 || n == 0)
+  { x=0; y=0; return 0; }
+  if (m<0) a=UNT(-m);
+  if (n<0) b=UNT(-n);
+  d=euphor(a,b,x,y);
+  if (m<0) x=-x;
+  if (n<0) y=-y;
+  return d; }
+
+int main(int argc, char* argv[])
+{ int m,n,x,y,d;
+  if (argc<3)
+  { printf("euphor <1st integer> <2nd integer>\n");
+    return 0; }
+  m=atoi(argv[1]);
+  n=atoi(argv[2]);
+  d=euphor(m,n,x,y);
+  printf("m: %d  n: %d  x: %d  y: %d  d: %d\n",m,n,x,y,d);
+	return 0; }

@@ -1,0 +1,46 @@
+// plain.cpp : creates a standard (lowercase) plain text file from another text file
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#pragma warning(disable: 4996)  // Disable (nonstandard) "deprecated" warning
+#pragma warning(disable: 4267)  // Disable (nonstandard) int len=strlen(str) warning
+
+#define LINLEN 60
+
+char chrlwr(char chr)
+{ if (chr >= 'a' && chr <= 'z') return chr;
+  if (chr >= 'A' && chr <= 'Z') return chr-'A'+'a';
+  return 0; }
+
+void plain(FILE *ori,FILE *trg)
+{ int chr;
+  int ctr=0;
+  while (1)
+  { chr=fgetc(ori);
+    if (chr==EOF) break;
+    if (chr=chrlwr(chr)) 
+    { fputc(chr,trg); 
+      if (++ctr%LINLEN==0) fputc('\n',trg); } } 
+  if (ctr%LINLEN) fputc('\n',trg); }
+
+int main(int argc, char* argv[])
+{ FILE *ori,*trg;
+  if (argc<3)
+  { printf("PLAIN <ori file> <targ file>\n");
+    return 0; }
+  ori = fopen(argv[1],"rb");
+  if (!ori)
+  { printf("Unable to open ori file %s\n",argv[1]);
+    exit(1); }
+  trg = fopen(argv[2],"wb");
+  if (!trg)
+  { printf("Unable to open trg file %s\n",argv[2]);
+    fclose(ori);
+    exit(1); }
+  plain(ori,trg);
+  fclose(trg);
+  fclose(ori);
+	return 0; }

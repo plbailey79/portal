@@ -1,0 +1,57 @@
+// dsaff.cpp : displays cryptanalysis for affine cipher
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#pragma warning(disable: 4996)  // Disable (nonstandard) "deprecated" warning
+#pragma warning(disable: 4267)  // Disable (nonstandard) int len=strlen(str) warning
+
+char chrupr(char chr)
+{ if (chr >= 'a' && chr <= 'z') return chr-'a'+'A';
+  if (chr >= 'A' && chr <= 'Z') return chr;
+  return 0; }
+
+void straff(char* buf,char* cry,int key)
+{ char chr;
+  int a,b;
+  a=(key/100)%26;
+  b=(key%100)%26;
+  if (a%2==0 || a%13==0) a=1;
+  while (chr=*buf++)
+  { *cry++=(((chr-'A')*a+b)%26)+'A'; }
+  *cry=0; }
+
+void dsaff(FILE *ori)
+{ int chr;
+  int ctr=0,key=0,a=1,b=0;
+  char buf[72],cry[72];
+  while (ctr<30)
+  { chr = fgetc(ori);
+    if (chr == EOF) break;
+    if (chr =  chrupr(chr)) 
+    { buf[ctr++]=chr; } }
+  buf[ctr]=0;
+  for (a=0; a<=25; a++)
+  { if (a%2==0) continue;
+    if (a==13) continue;
+    for (b=0; b<=25; b++)
+    { key=a*100+b;
+      straff(buf,cry,key);
+      printf("%4d %s",key,cry);
+      if (b%2) printf("\n");
+      else     printf("   "); } } }
+
+int main(int argc, char* argv[])
+{ FILE *ori;
+  if (argc<2)
+  { printf("DSAFF <ori file>\n");
+    return 0; }
+  ori = fopen(argv[1],"rb");
+  if (!ori)
+  { printf("Unable to open ori file %s\n",argv[1]);
+    exit(1); }
+  dsaff(ori);
+  fclose(ori);
+	return 0; }

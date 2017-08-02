@@ -1,0 +1,33 @@
+// inverse.cpp : Defines the entry point for the console application.
+//
+
+#include <stdio.h>
+
+typedef unsigned __int64 UNX;
+typedef   signed __int64 INX;
+typedef unsigned __int32 UNT;
+
+UNX euclid(UNX m,UNX n,INX& x,INX& y)
+{ INX d,q,r,t;
+  x=1; y=0;
+  q=n/m;
+  r=n%m;
+  if (r==0) return m;
+  //printf("%I64d = (%I64d)(%I64d) + %I64d\n",n,m,q,r);
+  d=euclid(r,m,x,y);
+  t=x; x=y-q*x; y=t;
+  //printf("%I64d = (%I64d)(%I64d) + (%I64d)(%I64d)\n",d,x,m,y,n);
+  return d; }
+
+UNT inverse(UNT a)
+{ UNX m=a,n=UNX(1)<<32;
+  INX x,y;
+  if (euclid(m,n,x,y) > 1) return 0;
+  x = x%n;
+  if (x<0) x=x+n;
+  return UNT(x); }
+
+int main(int argc, char* argv[])
+{ UNT a=123,b=inverse(a),c=a*b;
+  printf("a: %u  b: %u  a*b: %u\n",a,b,c);
+  return 0; }

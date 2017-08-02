@@ -1,0 +1,1341 @@
+\documentclass{amsart}
+
+\include{M306}
+
+\newcommand{\res}{\xi}
+
+\begin{document}
+
+\title{Abstract Algebra \\ Topic 2: Integers}
+\author[P. L. Bailey]{Paul L. Bailey}
+\address{Department of Mathematics and CSci\\
+         Southern Arkansas University}
+\email{plbailey@saumag.edu}
+\date{\today}
+
+\maketitle
+
+\section{The Well-Ordering Principle}
+
+The set of {\em natural numbers} is $\bN = \{ 0,1,2,3,\dots\}$,
+as characterized by the five {\em Peano axioms}.  The main axiom
+with which we are concerned is as follows.
+
+\begin{Prop} \BOLD{(Peano's Axiom)} \\
+Let $S \subset \bN$. If
+\begin{itemize}
+\ITEM{a} $0 \in S$, and \ITEM{b} $n \in S \IMP n+1 \in S$,
+\end{itemize}
+then $S = \bN$.
+\end{Prop}
+
+From this, we are able to develop two related tools for proving
+many properties of the integers.  These tools are known as the Well-Ordering Principle,
+which says that every nonempty set of natural numbers has a smallest element,
+and the Induction Principle, which says that if we have a sequence of propositions
+where the first is true and others follow from the previous one,
+then they are all true.
+
+\begin{Prop}
+\BOLD{(Well-Ordering Principle)} \\
+Let $X \subset \bN$ be nonempty. Then there exists $a \in X$ such
+that $a \le x$ for every $x \in X$.
+\end{Prop}
+
+\begin{proof}
+Let $X \subset \bN$ and assume that $X$ has no smallest element;
+we show that $X = \EMPTY$. Let
+\[ S = \{ n \in \bN \mid n < x \text{ for every } x \in X \} . \]
+Clearly $S \cap X = \EMPTY$; if we show that $S = \bN$, then $X =
+\EMPTY$.
+
+Since $0$ is less than or equal to every natural number, $0$ is
+less than or equal to every natural number in $X$.  Since $X$ has
+no smallest element, $0 \notin X$, so $0 < x$ for every $x \in X$.
+Thus $0 \in S$.
+
+Suppose that $n \in S$. Then $n < x$ for every $x \in X$, so $n+1
+\le x$ for every $x \in X$. If $n+1$ were in $X$, it would be the
+smallest element of $X$; since $X$ has no smallest element, $n+1
+\notin X$; thus $n+1 \ne x$ for every $x \in X$, whence $n+1 < x$
+for every $x \in X$. It follows that $n+1 \in S$, and by Peano's
+Axiom, $S = \bN$.
+\end{proof}
+
+\newpage
+
+\section{The Induction Principles}
+
+\begin{Prop} \BOLD{(Induction Principle)} \\
+Let $\{ p_i \mid i \in \bN \}$ be a set of propositions indexed by
+$\bN$. Suppose that
+\begin{itemize}
+\ITEM{I1} $p_0$ is true; \ITEM{I2} $p_{n-1}$ implies $p_n$, for
+$n>0$.
+\end{itemize}
+Then $p_i$ is true for all $i \in \bN$.
+\end{Prop}
+
+\begin{proof}
+Suppose not, and let $n \in \bN$ be the smallest natural number
+such that $p_n$ is false.  Then $n \ne 0$, since $p_0$ is true by
+\PROP{I1}, so $n-1$ exists as a natural number.  Since $n-1 < n$,
+$p_{n-1}$ is true. By \PROP{I2}, $p_{n-1} \IMP p_{n}$, so $p_{n}$
+is true, contradicting the assumption. Thus $p_i$ is true for all
+$i \in \bN$.
+\end{proof}
+
+We call \PROP{I1} the {\em base case} and \PROP{I2} the {\em
+inductive step}. We note that by shifting, we can actually start
+the induction at any integer. Here is an example demonstrating
+proof by induction.
+
+\begin{Exm}
+Show that $11^n - 4^n$ is a multiple of $7$ for all $n \in \bN$.
+\end{Exm}
+
+\begin{proof}
+A natural number $a$ is a multiple of $7$ if and only if $a = 7b$
+for some natural number $b$. We proceed by induction on $n$.
+First we verify the base case, when $n = 0$, and then demonstrate
+the induction step, wherein we show that if the proposition is
+true for $n-1$, then it is true for $n$.
+
+\PROP{I1} Let $n=0$.  Then $n = 7 \cdot 0$, so $n$ is a multiple
+of $7$ in this case. This verifies the base case.
+
+\PROP{I2} Let $n > 0$, and assume that $11^{n-1} - 4^{n-1}$ is a
+multiple of $7$. Then $11^{n-1} - 4^{n-1} = 7k$ for some $k \in
+\bN$. Now compute
+\begin{align*}
+11^n - 4^n
+    &= 11^n - 11 \cdot 4^{n-1} + 11 \cdot 4^{n-1} - 4^{n} \\
+    &= 11(11^{n-1} - 4^{n-1}) + 4^{n-1}(11-4) \\
+    &= 11 \cdot 7k + 4^{n-1} \cdot 7 \\
+    &= 7(11k+4^{n-1}) ,
+\end{align*}
+which is a multiple of seven.
+
+Thus properties \PROP{I1} and \PROP{I2} hold, so the proposition
+is true for all $n \in \bN$.
+\end{proof}
+
+\begin{Prop} \BOLD{(Strong Induction Principle)} \\
+Let $\{ p_i \mid i \in \bN \}$ be a set of propositions indexed by
+$\bN$. Suppose that
+\begin{itemize}
+\ITEM{IS} if $p_i$ is true for all $i < n$, then $p_{n}$ is true.
+\end{itemize}
+Then $p_i$ is true for all $i \in \bN$.
+\end{Prop}
+
+\begin{proof}
+Suppose not, and let $m$ be the smallest natural number such that $p_m$ is false.
+Then $p_i$ is true for all $i < m$. By
+\PROP{IS}, $p_m$ is true, contradicting the assumption. Thus $p_i$
+is true for all $i \in \bN$.
+\end{proof}
+
+It is common in the statement of the strong induction principle to
+include the base case \PROP{I1}, that $p_0$ is true, as a premise.
+In practice, we may have to verify \PROP{I1} as a step in demonstrating \PROP{IS}.
+We note that \PROP{I1} is implied by \PROP{IS}, but that \PROP{I2}
+is not implied by \PROP{IS} (why?).
+
+\newpage
+
+\section{The Division Algorithm}
+
+\begin{Prop}
+\BOLD{(Division Algorithm)} \\
+Let $m,n \in \bZ$ with $m \ne 0$. There exist unique integers $q,r
+\in \bZ$ such that
+\[ n = qm + r \qquad \text{ and } \qquad 0 \le r < \modu{m} . \]
+\end{Prop}
+
+We offer two proofs of this, one using the well-ordering principle
+directly, and the other phrased in terms of strong induction.
+
+\begin{proof}[Proof by Well-Ordering]
+First assume that $m$ and $n$ are positive.
+
+Let $X = \{ z \in \bZ \mid z = n - km \text{ for some } k \in \bZ
+\}$. The subset of $X$ consisting of nonnegative integers is a
+subset of $\bN$, and by the Well-Ordering Principle, contains a
+smallest member, say $r$.  That is, $r = n - qm$ for some $q \in
+\bZ$, so $n = qm + r$. We know $0 \le r$.  Also, $r < m$, for
+otherwise, $r - m$ is positive, less than $r$, and in $X$.
+
+For uniqueness, assume $n = q_{1}m + r_{1}$ and $n = q_{2} m +
+r_{2}$, where $q_{1},r_{1},q_{2},r_{2} \in \bZ$, $0 \le r_{1} <
+m$, and $0 \le r_{2} < m$. Then $m(q_{1}-q_{2}) = r_{1}-r_{2}$;
+also $-m < r_{1}-r_{2} < m$. Since $m \divides (r_{1}-r_{2})$, we
+must have $r_{1} - r_{2} = 0$. Thus $r_{1} = r_{2}$, which forces
+$q_{1} = q_{2}$.
+
+The proposition remains true if one or both of the original
+numbers are negative because, if $n = mq+r$ with $0 \le r < m$,
+then $0 \le m-r < m$ when $r>0$, and
+\begin{itemize}
+\item $(-n) = m(-q-1) + (m-r)$ if $r>0$ and $(-n) = m(-q)$ if $r =
+0$; \item $(-n) = (-m)(q+1) + (m-r)$ if $r > 0$ and $(-n) = (-m)q$
+if $r = 0$; \item $n = (-m)(-q) + r$.
+\end{itemize}
+\end{proof}
+
+\begin{proof}[Proof by Strong Induction]
+Assume that $m$ and $n$ are positive.
+
+If $m > n$, set $q=0$ and $r=n$. If $m = n$, set $q = 1$ and $r = 0$.
+Otherwise, we have $0 < m < n$.
+Proceed by strong induction on $n$. Here we assume that the
+proposition is true for all natural number less that $n$, and show
+that this implies that the proposition is true for $n$.  Then, by
+the conclusion of the Strong Induction Principle, the proposition
+will be true for all natural numbers $n$.
+
+Note that $n = m + (n-m)$ and $n-m < n$, so by induction, $n-m =
+mq_1 + r$ for some $q_1,r \in \bZ$ with $0 \le r_1 < m$.
+Therefore $n = m(q_1 + 1) + r_1$; set $q = q_1 + 1$ to see that $n
+= mq + r$, with $r$ still in the range $0 \le r < m$.
+
+The proof for uniqueness and the cases where $m$ and/or $n$ are
+negative are the same as above.
+\end{proof}
+
+Notice that the proof by induction reveals division as repeated subtraction.
+It more closely mimics the algorithm we use to find $q$ and $r$ than
+does the proof via the Well-Ordering Principle.
+
+\newpage
+
+\section{The Euclidean Algorithm}
+
+\begin{Def}
+Let $m,n \in \bZ$.  We say that $m$ {\em divides} $n$, and write
+$m \divides n$, if there exists an integer $k$ such that $n = km$.
+\end{Def}
+
+\begin{Def}
+Let $m,n \in \bZ$ be nonzero.  We say that a positive integer $d \in \bZ$
+is a {\em greatest common divisor} of $m$ and $n$,
+and write $d = \gcd(m,n)$, if
+\begin{itemize}
+\ITEM{a} $d \divides m$ and $d \divides n$;
+\ITEM{b} $e \divides m$ and $e \divides n$ implies $e \divides d$, for all $e \in \bZ$.
+\end{itemize}
+\end{Def}
+
+\begin{Prop} \BOLD{(Euclidean Algorithm)} \\
+Let $m,n \in \bZ$ be nonzero. Then there exists a unique $d \in
+\bZ$ such that $d = \gcd(m,n)$, and there exist integers $x,y \in
+\bZ$ such that
+\[ d = xm + yn . \]
+\end{Prop}
+
+\begin{proof}
+Let $X = \{ z \in \bZ \mid z = xm + yn \text{ for some } x,y \in
+\bZ \}$. Then the subset of $X$ consisting of positive integers
+contains a smallest member, say $d$, where $d = xm + yn$ for some
+$x,y \in \bZ$.
+
+Now $m = qd + r$ for some $q,r \in \bZ$ with $0 \le r < d$. Then
+$m = q(xm+yn) + r$, so $r = (1 - qxm)m + (qy)n \in X$. Since $r <
+d$ and $d$ is the smallest positive integer in $X$, we have $r =
+0$.  Thus $d \divides m$.  Similarly, $d \divides n$.
+
+If $e \divides m$ and $e \divides n$, then $m = ke$ and $n = le$
+for some $k,l \in \bZ$. Then $d = xke + yle = (xk+yl)e$.
+Therefore $e \divides d$. This shows that $d = \gcd(m,n)$.
+
+For uniqueness of a greatest common divisor, suppose that $e$ also
+satisfies the conditions of a $\gcd$.  Then $d \divides e$ and $e
+\divides d$. Thus $d = ie$ and $e = jd$ for some $i,j \in \bZ$.
+Then $d = ijd$, so $ij = 1$.  Since $i$ and $j$ are integers, then
+$i = \pm 1$.  Since $d$ and $e$ are both positive, we must have $i
+= 1$.  Thus $d = e$.
+\end{proof}
+
+This shows that the $d = \gcd(m,n)$ exists and the formula $xm+yn = d$ holds,
+but does not give a method of finding $x$, $y$, and $d$.  The method we develop is based
+on the following propositions.
+
+\begin{Prop} \label{GCDObvious}
+Let $m,n \in \bN$ and suppose that $m \divides n$.
+Then $\gcd(m,n) = m$.
+\end{Prop}
+
+\begin{proof}
+Clearly $m \divides m$, and we are given $m \divides n$.
+Now suppose that $e \divides m$ and $e \divides n$.
+Then $e \divides m$.  Thus $m = \gcd(m,n)$.
+\end{proof}
+
+\begin{Prop} \label{GCDRecursive}
+Let $m,n \in \bZ$ be nonzero, and let $q,r \in \bZ$ such that $n =
+qm + r$. Then $\gcd(n,m) = \gcd(m,r)$.
+\end{Prop}
+
+\begin{proof}
+Let $d = \gcd(n,m)$.  We wish to show that $d = \gcd(m,r)$, which
+requires showing that $d$ satisfies the two properties of being the
+greatest common divisor of $m$ and $r$.
+
+Since $d = \gcd(n,m)$, we know that $d \divides n$ and $d \divides
+m$. Thus $n = ad$ and $m = bd$ for some $a,b \in \bZ$. Now $r = n
+- mq = ad - bdq = d(a - bq)$, so $d \divides r$.  Thus $d$ is a
+common divisor of $m$ and $r$.
+
+Let $e \in \bZ$ such that $e \divides m$ and $e \divides r$. Then
+$m = ge$ and $n = he$ for some $g,h \in \bZ$, so $n = geq + he =
+e(gq + h)$; thus $e \divides n$, so $e$ is a common divisor of $n$
+and $m$. Since $d = \gcd(n,m)$, $e \divides d$.  Therefore, $d =
+\gcd(m,r)$.
+\end{proof}
+
+\newpage
+
+There is an efficient effective procedure for finding the greatest
+common divisor of two integers.  It is based on the following
+proposition.
+
+Now let $m,n \in \bZ$ be arbitrary integers, and write $n = mq +
+r$, where $0 \le r < m$. Let $r_{0} = n$, $r_{1} = m$, $r_{2} =
+r$, and $q_{1} = q$. Then the equation becomes $r_{0} = r_{1}q_{1}
++ r_{2}$. Repeat the process by writing $m = rq_{2} + r_{3}$,
+which is the same as $r_{1} = r_{2}q_{2} + r_{3}$, with $0 \le
+r_{3} < r_{2}$. Continue in this manner, so in the $\th{i}$ stage,
+we have $r_{i-1} = r_{i}q_{i} + r_{i+1}$, with $0 \le r_{i+1} <
+r_{i}$. Since $r_{i}$ keeps getting smaller, it must eventually
+reach zero.
+
+Let $k$ be the smallest integer such that $r_{k+1} = 0$. By the
+above proposition and induction,
+\[ \gcd(n,m) = \gcd(m,r) = \dots = \gcd(r_{k-1},r_{k}) . \]
+But $r_{k-1} = r_{k}q_{k} + r_{k+1} = r_{k}q_{k}$. Thus $r_{k}
+\divides r_{k-1}$, so $\gcd(r_{k-1},r_{k}) = r_{k}$. Therefore
+$\gcd(n,m) = r_{k}$.  This process for finding the $\gcd$ is known
+as the {\em Euclidean Algorithm}.
+
+In order to find the unique integers $x$ and $y$ such that $xm +
+yn = \gcd(m,n)$, use the equations derived above and work
+backward. Start with $r_{k} = r_{k-2} - r_{k-1}q_{k-1}$.
+Substitute the previous equation $r_{k-1} = r_{k-3} -
+r_{k-2}q_{k-2}$ into this one to obtain
+\[ r_{k} = r_{k-2} - (r_{k-3} - r_{k-2}q_{k-2})q_{k-1}
+        = r_{k-2}(q_{k-2}q_{k-1}+1) - r_{k-3}q_{k-1} . \]
+Continuing in this way until you arrive back at the beginning.
+
+\begin{Exm}
+Let $n = 210$ and $m = 165$. Work forward to find the $\gcd$:
+\begin{itemize}
+\item $210 = 165 \cdot 1 + 45$; \item $165 = 45 \cdot 3 + 30$;
+\item $45 = 30 \cdot 1 + 15$; \item $30 = 15 \cdot 2 + 0$.
+\end{itemize}
+Therefore, $\gcd(210,165) = 15$.  Now work backwards to find the
+coefficients:
+\begin{itemize}
+\item $15 = 45 - 30 \cdot 1$; \item $15 = 45 - (165 - 45 \cdot 3)
+= 45 \cdot 4 - 165$; \item $15 = (210 - 165) \cdot 4 - 165 = 210
+\cdot 4 - 165 \cdot 5$.
+\end{itemize}
+Therefore, $15 = 210 \cdot 4 + 165 \cdot (-5)$.
+\end{Exm}
+
+Let's briefly analyze the inductive process of ``working
+backwards''.
+
+At each stage, let $m$ denote the smaller number and let $n$ denote the larger number.
+Always attach $x$ to $m$ and $y$ to $n$, to get $d = xm + yn$, where $d = \gcd(m,n)$.
+Now at the very end, the remainder is zero, so
+$n = mq + 0$.
+Thus $m = \gcd(n,m)$, that is, $d = m$.
+Writing $d$ as a linear combination at this stage, we have
+\[ d = (1)m + (0) n m \]
+so $x = 1$ and $y = 0$.
+
+Now we want to lift this to a previous equation of the form $n = mq + r$.
+Assume, by way of induction, that we have already lifted it to the
+next equation; that is, we have $n' = m' q' + r'$,
+where $n' = m$, $m' = r$, and we can express $d$ as a linear combination of $m'$ and $n'$,
+like this:
+\[ d = x' m' + y' n' . \]
+Then $d = x' r + y' m$.  Substitute in $r = n - mq$ to express $d$ as a linear combination
+of $m$ and $n$; you get $d = x'(n - mq) + y' m = (y' - x'q)m + x' n$.
+Set $x = y' - x'q$ and $y = x'$ to obtain $d = xm + yn$.
+
+\newpage
+
+%\section{Relative Primeness}
+%
+%An alternate method of find the greatest common divisor of two integers is to factor them
+%into primes, and collect all of the common primes; their product will be the greatest
+%common divisor.  If the integers have no primes in common, then their greatest common
+%divisor is one.
+
+\begin{Def}
+Let $m,n \in \bZ$.  We say that $m$ and $n$ are {\em relatively prime} if
+\[ \gcd(m,n) = 1 . \]
+\end{Def}
+
+\begin{Prop} \label{GCDOne}
+Let $m,n \in \bZ$.
+Then
+\[ \gcd(m,n) = 1 \quad \IFF \quad xm + yn = 1 \text{ for some $x,y \in \bZ$} . \]
+\end{Prop}
+
+\begin{proof}
+We have already seen that if $\gcd(m,n) = 1$, then $xm + yn = 1$ for some $x,y \in \bZ$.
+Thus we prove the reverse direction; suppose that $xm + yn = 1$ for some $x,y \in \bZ$.
+We wish to show that $\gcd(m,n) = 1$.
+
+Clearly $1 \divides m$ and $1 \divides n$.
+Suppose that $e \divides m$ and $e \divides n$.
+Then $m = ke$ and $n = le$ for some $k,l \in e$.
+So
+\[ 1 = xke + yle = (xk+yl)e. \]
+Thus $e \divides 1$, whence $\gcd(m,n) = 1$.
+\end{proof}
+
+%One must be careful, when proving theoretical results about numbers, that one does not
+%inappropriately move through the rational numbers (the arithmetic properties of the $\bQ$
+%much different than those of $\bZ$).  So, we keep track of whether
+%a given number is integral or rational.  Here,
+%We note that
+%if $d \divides a$, then $a = cd$ for some $c$; we let $\frac{a}{d}$ denote the integer
+%which is $c$.
+
+\begin{Prop}
+Let $m,n,d \in \bZ$ such that $\gcd(m,n) = d$.  Then $\gcd(\frac{m}{d},\frac{n}{d}) = 1$.
+\end{Prop}
+
+\begin{proof}
+Since $xm + yn = d$ for some $x,y \in \bZ$, we have $x\frac{m}{d} + y\frac{n}{d} = 1$.
+From Proposition \ref{GCDOne},
+we conclude that $\gcd(\frac{m}{d},\frac{n}{d}) = 1$.
+\end{proof}
+
+\begin{Prop}
+Let $a,b,c \in \bZ$.  If $a \divides bc$ and $\gcd(a,b) = 1$, then $a \divides c$.
+\end{Prop}
+
+\begin{proof}
+Since $a \divides bc$, there exists $z \in \bZ$ such that $az = bc$.
+Since $\gcd(a,b) = 1$, there exist $x,y \in \bZ$ such that $xa + yb = 1$.
+Multiplying both sides by $c$ gives
+\[ xac + ybc = c \IMP xac + yaz = c \IMP a(xc+yz) = c . \]
+Thus $a \divides c$.
+\end{proof}
+
+\begin{Prop}
+Let $a,b,c \in \bZ$.  If $a \divides c$, $b \divides c$, and $\gcd(a,b) = 1$, then $ab \divides c$.
+\end{Prop}
+
+\begin{proof}
+There exist $e,f,x,y \in \bZ$ such that $ae = c$, $bf = c$, and $xa + yb = 1$.
+Multiplying the last equation by $c$ gives $xac + ybc = c$.
+Substitution gives $xabf + ybae = c$, so $ab(xf+ye) = c$.
+Thus $ab \divides c$.
+\end{proof}
+
+\begin{Def}
+Let $m,n \in \bZ$.  We say that a positive integer $l \in \bZ$ is a {\em least common multiple}
+of $m$ and $n$, and write $l = \lcm(m,n)$, if
+\begin{itemize}
+\ITEM{a} $m \divides l$ and $n \divides l$;
+\ITEM{b} $m \divides k$ and $n \divides k$ implies $l \divides k$, for all $k \in \bZ$.
+\end{itemize}
+\end{Def}
+
+\begin{Prop}
+Let $m,n \in \bZ$ be nonzero. Then there exists a unique $l \in \bZ$
+such that $l = \lcm(m,n)$, and if $d = \gcd(m,n)$, then
+\[ l = \frac{mn}{d} . \]
+\end{Prop}
+
+\begin{proof}
+Let $l = \frac{mn}{d}$; we wish to show that $l$ is a least common multiple for $m$ and $n$.
+Since $d = \gcd(m,n)$, $\frac{m}{d}$ and $\frac{n}{d}$ are integers,
+and $l = m \frac{n}{d} = n \frac{m}{d}$. Thus $m \divides l$ and $n \divides l$.
+
+Now suppose that $k$ is an integer such that $m \divides k$ and $n \divides k$;
+we wish to show that $l \divides k$.
+We have $k = ae$ and $k = bf$ for some $e,f \in \bZ$.  Thus $ae = bf$,
+and dividing by $d$ gives $e \frac{a}{d} = f \frac{b}{d}$.
+Thus $\frac{a}{d} \divides f \frac{b}{d}$, and since $\gcd(\frac{a}{d},\frac{b}{d}) = 1$,
+we have $\frac{a}{d} \divides f$.
+Thus $f = g \frac{a}{d}$ for some $g \in \bZ$, so $k = bf = g \frac{ab}{d} = gl$.
+Thus $l \divides k$, so $l$ is a least common multiple of $m$ and $n$.
+
+For uniqueness, note that any two least common multiples must divide each other;
+but they are both positive, so they must be equal.
+\end{proof}
+
+\newpage
+
+\section{Fundamental Theorem of Arithmetic}
+
+\begin{Def}
+An integer $p \ge 2$, is called {\em prime} if
+\[ a \divides p \IMP a = 1 \text{ or } a = p, \quad \text{ where } a \in \bN . \]
+\end{Def}
+
+\begin{Prop}
+Let $a,p \in \bZ$, with $p$ prime.  Then
+\[ \gcd(a,p) =
+\begin{cases}
+    $p$ & \quad \text{ if $p \divides a$} ; \\
+    $1$ & \quad \text{ otherwise}.
+\end{cases} \]
+\end{Prop}
+
+\begin{proof}
+Let $d = \gcd(a,p)$.  Then $d \divides p$, so $d = 1$ or $d = p$.
+We have $p \divides p$, so if $p \divides a$, we have $p \divides d$.
+In this case, $d = p$.
+If $p$ does not divide $a$, then $d \ne p$, so we must have $d = 1$.
+\end{proof}
+
+\begin{Prop} \BOLD{(Euclid's Argument)} \\
+Let $p \in \bZ$, $p \ge 2$. Then $p$ is prime if and only if
+\[ p \divides ab \IMP p \divides a \text{ or } p \divides b, \quad \text{ where } a,b \in \bN . \]
+\end{Prop}
+
+\begin{proof}
+\text{ } \\
+($\IMP$) Given that $a \divides p \IMP a = 1 \text{ or } a = p$,
+suppose that $p \divides ab$. Then there exists $k \in \bN$ such
+that $kp = ab$. Suppose that $p$ does not divide $a$; then
+$\gcd(a,p) = 1$. Thus there exist $x,y \in \bZ$ such that $xa + yp
+= 1$. Multiply by $b$ to get $xab + ypb = b$. Substitute $kp$ for
+$ab$ to get $(xk + yb)p = b$.
+Thus $p \divides b$. \\
+($\IMB$) Given that $p \divides ab \IMP p \divides a \text{ or } p
+\divides b$, suppose that $a \divides p$. Then there exists $k \in
+\bN$ such that $ak = p$. So $p \divides ak$, so $p \divides a$ or
+$p \divides k$. If $p \divides a$, then $pl = a$ for some $l \in
+\bN$, in which case $alk = a$ and $lk = 1$, which implies that $k
+= 1$ so $a = p$. If $p \divides k$, then $k = pm$ for some $m \in
+\bN$, and $apm = p$, so $am = 1$ which implies that $a = 1$.
+\end{proof}
+
+\begin{Prop}
+Let $n \in \bZ$ with $n \ge 2$. \\
+There exists a prime $p \in \bZ$ such that $p \divides n$.
+\end{Prop}
+
+\begin{proof}
+Proceed by strong induction on $n$. If $n$ is prime, it divides
+itself; otherwise, $n$ is not prime, and $n = ab$ for some $a,b
+\in \bZ$ with $a < n$ and $b < n$. By induction, $a$ is divisible
+by a prime, so $n = ab$ is divisible by that prime.
+\end{proof}
+
+\begin{Prop}\BOLD{(Fundamental Theorem of Arithmetic)} \\
+Let $n \in \bZ$, $n \ge 2$.  Then there exist unique prime numbers
+$p_1 , \dots , p_r$, unique up to order, such that
+\[ n = \prod_{i=1}^r p_i . \]
+\end{Prop}
+
+\begin{proof}
+We know that $n$ is divisible by some prime, say $n = pm$ for some
+$p,m \in \bZ$ with $p$ prime. Since $m$ is smaller than $n$, we
+conclude by induction that $m$ factors into a product of primes;
+thus $n = pm$ factors into a product of primes.
+To see that this factorization is unique,
+suppose that there exist prime $p_1, \dots, p_r$ and $q_1, \dots,
+q_s$ such that
+\[ n = p_1 p_2 \cdots p_r = q_1 q_2 \cdots q_s . \]
+By repeatedly applying Euclid's Argument, we see that $p_1
+\divides q_i$ for some $i$, and by renumbering if necessary, we
+may assume that $p_1 \divides q_1$. Since $q_1$ is prime, $p_1 =
+1$ or $p_1 = q_1$; but $p_1$ is also prime, so it is greater than
+$1$; thus $p_1 = q_1$.  Canceling these, we see that $p_2 \cdots
+p_r = q_2 \cdots q_s$, and we may repeat this process obtaining
+$p_2 = q_2$, $p_3 = q_3$, and so forth. We also see that $r = s$,
+for otherwise, we would obtain an equation in which a product of
+primes equals one.
+\end{proof}
+
+\begin{comment}
+\begin{Prop}
+Let $P = \{ n \in \bZ \mid n \text{ is prime} \}$. Then $P$ is
+infinite.
+\end{Prop}
+
+\begin{proof}
+Suppose that $P$ is finite; then $P = \{ p_1, \dots, p_r \}$ for
+some primes $p_i$. Set
+\[ n = 1 + \prod_{i=1}^r p_i . \]
+Clearly $n > 1$, so $n$ is divisible by some prime $p$, and $p =
+p_i$ for some $i$. Thus $p$ divides $n$ and $\prod_{i=1}^r p_i$,
+so $p$ divides $1 = n - \prod_{i=1}^r p_i$. But $1$ cannot be
+divisible by a prime, so we have a contradiction.
+\end{proof}
+\end{comment}
+
+\newpage
+
+\section{Congruence Modulo $n$}
+
+\begin{Def}
+Let $n \in \bN$, and define a relation $\equiv_{n}$ on $\bZ$ by
+\[ a \equiv_n b \quad \IFF \quad n \divides (a-b) . \]
+This relation is called {\em congruence modulo $n$};
+that is, if $a \equiv_n b$, we say that $a$ is {\em congruent}
+to $b$ modulo $n$.
+This relation may also be written $a \equiv b \MOD{n}$, or simply $a \equiv b$
+if the $n$ is understood.
+\end{Def}
+
+\begin{Prop}
+Let $n \in \bN$. Then $\equiv$ modulo $n$ is an equivalence relation on $\bZ$.
+\end{Prop}
+
+\begin{proof}
+We wish to show that $\equiv$ is reflexive, symmetric, and transitive.
+
+({\em Reflexivity}) Let $a \in \bZ$. Now $0 \cdot n = 0 = a-a$; thus
+$n \divides (a-a)$, so $a \equiv a$. Therefore $\equiv$ is
+reflexive.
+
+({\em Symmetry}) Let $a,b \in \bZ$. Suppose that $a \equiv b$; then
+$n \divides (a-b)$. Then there exists $k \in \bZ$ such that $nk =
+a-b$. Then $n(-k) = b-a$, so $n \divides (b-a)$. Thus $b \equiv a$.
+Similarly, $b \equiv a \IMP a \equiv b$. Therefore $\equiv$ is
+symmetric.
+
+({\em Transitivity}) Let $a,b,c \in \bZ$, and suppose that $a \equiv
+b$ and $b \equiv c$. Then $nk = a-b$ and $nl = b-c$ for some $k,l
+\in \bZ$. Then $a-c = nk - nl = n(k-l)$, so $n \divides (a-c)$. Thus
+$a \equiv c$. Therefore $\equiv$ is transitive.
+\end{proof}
+
+\begin{Prop} \label{UniquePreferred}
+Let $n \in \bN$ and let $a_{1},a_{2} \in \bZ$. By the Division
+Algorithm, there exist unique integers $q_{1},r_{1},q_{2},r_{2} \in
+\bZ$ such that
+\begin{itemize}
+\item $a_{1} = nq_{1} + r_{1}$, where $0 \le r_{1} < n$;
+\item $a_{2} = nq_{2} + r_{2}$, where $0 \le r_{2} < n$.
+\end{itemize}
+Then $a_{1} \equiv a_{2} \MOD{n}$ if and only if $r_{1} = r_{2}$.
+\end{Prop}
+
+\begin{proof}
+\text{ }
+
+($\IMP$) Suppose that $a_{1} \equiv a_{2}$. Then $n \divides (a_{1}
+- a_{2})$. This means that $nk = a_{1} - a_{2}$ for some $k \in
+\bZ$. But $a_{1} - a_{2} = n(q_{1}-q_{2}) + (r_{1} - r_{2})$. Then
+$n(k + q_{1} - q_{2}) = r_{1} - r_{2}$, so $n \divides r_{1} -
+r_{2}$.
+
+Multiplying the inequality $0 \le r_{2} < n$ by $-1$
+gives $-n < -r_{2} \le 0$.
+Adding this inequality to the inequality $0 \le r_{1} < n$
+gives $-n < r_{1}-r_{2} < n$.
+But $r_{1} - r_{2}$ is an integer multiple of $n$;
+the only possibility, then, is that $r_{1} - r_{2} = 0$.
+Thus $r_{1} = r_{2}$.
+
+($\IMB$)
+Suppose that $r_{1} = r_{2}$.
+Then $a_{1} - a_{2} = nq_{1} - nq_{2} = n(q_{1}-q_{2})$.
+Thus $n \divides (a_{1} - a_{2})$,
+so $a_{1} \equiv a_{2}$.
+\end{proof}
+
+\newpage
+
+\section{Chinese Remainder Theorem}
+
+The Chinese Remainder Theorem indicates a condition under which we can solve a system
+of congruences.
+
+\begin{Prop} \BOLD{(Chinese Remainder Theorem)} \\
+Let $a,b,m,n \in \bZ$ such that $\gcd(m,n) = 1$.
+Then there exists $c \in \bZ$ with $0 \le c < mn$ such that
+\begin{itemize}
+\item $c \equiv a \MOD{m}$;
+\item $c \equiv b \MOD{n}$.
+\end{itemize}
+\end{Prop}
+
+\begin{proof}
+There exist $x,y \in \bZ$ such that $mx + ny = 1$.
+Let $c = mxb + nya$.
+Then
+\[ c - a = mxb + nya - a = mxb + (ny-1)a = mxb - mxa, \]
+so $m$ divides $c-a$; thus $c \equiv a \MOD{m}$.
+Also
+\[ c - b = mxb + nya - b = (mx-1)b + nya = -nyb + nya, \]
+so $n$ divides $c-b$; thus $c \equiv b \MOD{n}$.
+\end{proof}
+
+\begin{Exm}
+Let $m = 104$, $n = 231$, $a = 11$, and $b = 23$.
+Find $c \in \bZ$ with $0 \le c < mn$ such that $c \equiv a \MOD{m}$ and $c \equiv b \MOD{n}$.
+\end{Exm}
+
+\begin{proof}[Solution]
+First we use the Euclidean algorithm to write $mx + yn = d$.
+We have
+\begin{align*}
+231 &= 104 \cdot 2 + 23 \\
+104 &= 23 \cdot 4 + 12 \\
+23 &= 12 \cdot 1 + 11 \\
+12 &= 11 \cdot 1 + 1 \\
+11 &= 1 \cdot 11 + 0
+\end{align*}
+Thus
+\begin{align*}
+1 &= (-1) 11 + 12 \\
+  &= (2) 12 + (-1) 23 \\
+  &= (-9) 23 + (2) 104 \\
+  &= (20) 104 + (-9) 231
+\end{align*}
+That is, $x = 20$, $y = -9$, and $d = 1$,
+
+Now set
+\[ c = mxb + nya \MOD{24024} = 24971 \MOD{24024} = 947. \]
+\end{proof}
+
+\newpage
+
+\section{Integers Modulo $n$}
+
+Let $n \in \bZ$, $n \ge 2$.
+The equivalence relation $\equiv_{n}$ partitions the set $\bZ$
+into blocks, known as {\em congruence classes modulo $n$}.
+For an integer $a \in \bZ$, denote its
+congruence class by $[a]_{n}$.
+If the $n$ is understood, we may write this congruence class as $[a]$,
+or more commonly, as $\BAR{a}$.
+
+An element $r \in \bZ$ is called a {\em preferred representative}
+for $[a]_{n}$ if $r \in [a]_{n}$ and $0 \le r < n$.  This is the remainder
+when any element in $[a]_n$ is divided by $n$
+
+The division algorithm for the integers tells us that there is a
+preferred representative for each congruence class. Also, Proposition \ref{UniquePreferred}
+guarantees that as
+$r$ ranges over the integers from $0$ to $n-1$, the congruence
+classes $[r]_{n}$ are distinct.  Thus there are exactly $n$
+equivalence classes, modulo $n$.  Henceforth, whenever we refer to $\bZ_n$,
+assume that $n \in \bZ$ with $n \ge 2$.
+
+\begin{Def}
+The {\em ring of integers modulo $n$}
+is
+\[ \bZ_n = \{ [a]_n \mid a \in \bZ \}. \]
+\end{Def}
+
+That is, $\bZ_n$ is the set of equivalence classes modulo $n$, and $\modu{\bZ_n} = n$.
+For example,
+\[ \bZ_{7} = \{ \BAR{0}, \BAR{1}, \BAR{2}, \BAR{3},
+        \BAR{4}, \BAR{5}, \BAR{6} \} . \]
+
+\begin{Prop}
+Define the binary operations on $\bZ_n$,
+\[ + : \bZ_n \cross \bZ_n \to \bZ_n \quad \text{ and } \quad \cdot : \bZ_n \cross \bZ_n \to \bZ_n , \]
+known as addition and multiplication, by
+\[ \BAR{a} + \BAR{b} = \BAR{a+b}
+        \quad \text{ and } \quad \BAR{a}\cdot\BAR{b} = \BAR{ab} . \]
+These operations are well-defined.
+\end{Prop}
+
+\begin{proof}
+Select $a_{1},a_{2},b_{1},b_{2} \in \bZ$ such that $a_{1} \equiv
+a_{2}$ and $b_{1} \equiv b_{2}$; say $a_{1} - a_{2} = kn$ and $b_{1}
+- b_{2} = ln$ for some $k,l \in \bZ$.
+
+({\em Addition})
+We wish to show that $\BAR{a_{1}+b_{1}} = \BAR{a_{2} + b_{2}}$, i.e.,
+that $a_{1} + b_{1} \equiv a_{2} + b_{2}$.
+We simply add the equations above to obtain
+$a_{1} - a_{2} + b_{1} - b_{2} = kn + ln$;
+thus
+\[ (a_{1} + b_{1}) - (a_{2} + b_{2}) = (k+l)n ; \]
+from this, $n \divides ((a_{1}+b_{1})-(a_{2}+b_{2}))$,
+so $a_{1}+b_{1} \equiv a_{2} + b_{2}$.
+
+({\em Multiplication})
+We wish to show
+that $\BAR{a_{1}}\cdot\BAR{b_{1}} = \BAR{a_{2}} \cdot \BAR{b_{2}}$, i.e.,
+that $a_{1}b_{1} \equiv a_{2}b_{2}$.
+To do this, adjust the original equations to obtain
+%\[ a_{1} = a_{2} + kn \qquad \text{ and } \qquad b_{1} = b_{2} + ln \]
+$a_{1} = a_{2} + kn$ and $b_{1} = b_{2} + ln$,
+and multiply them to obtain
+$a_{1}b_{1} = a_{2}b_{2} + a_{2}ln + b_{2}kn + kln^{2}$,
+whence
+\[ a_{1}b_{1} - a_{2}b_{2} = (a_{2}l + b_{2}k + kln)n ; \]
+thus $n \divides (a_{1}b_{1} - a_{2}b_{2})$,
+so $a_{1}b_{1} \equiv a_{2}b_{2}$.
+\end{proof}
+
+\begin{Def}
+The {\em residue map modulo $n$} is the function
+\[ \res_n : \bZ \to \bZ_n \quad \text{ given by } \quad \res_n(a) = \BAR{a} . \]
+\end{Def}
+
+\begin{Prop}
+Let $n \in \bZ$, $n \ge 2$, and consider the residue map $\res_n : \bZ \to \bZ_n$.
+Then
+\begin{itemize}
+\ITEM{a} $\res_n(0) = \BAR{0}$ and $\res_n(1) = \BAR{1}$;
+\ITEM{b} $\res_n(a+b) = \res_n(a) + \res_n(b)$;
+\ITEM{c} $\res_n(ab) = \res_n(a) \res_n(b)$.
+\end{itemize}
+\end{Prop}
+
+\begin{proof}
+This is immediate from the definitions of addition and multiplication in $\bZ_n$,
+and the fact that the are well-defined.
+\end{proof}
+
+\newpage
+
+\section{Properties of Addition}
+
+\begin{Prop}
+Addition on $\bZ_{n}$ is commutative, associative, admits an identity $\BAR{0}$,
+and admits additive inverses.
+\end{Prop}
+
+\begin{proof}
+Select $a,b \in \bZ$ so that $\BAR{a}$, $\BAR{b}$, and $\BAR{c}$
+are arbitrary members of $\bZ_{n}$.
+
+To see that $+$ is commutative, note that
+\[ \BAR{a} + \BAR{b} = \BAR{a+b} = \BAR{b+a} = \BAR{b} + \BAR{a} . \]
+
+To see that $+$ is associative, compute
+\[ (\BAR{a}+\BAR{b}) + \BAR{c} = \BAR{a+b} + \BAR{c} = \BAR{(a+b)+c} = \BAR{a+(b+c)} = \BAR{a} + \BAR{b+c}
+    = \BAR{a} + (\BAR{b} + \BAR{c}) . \]
+%to see
+%\begin{align}
+%\BAR{a} + \BAR{b}
+%        &= \BAR{a+b} \text{ by definition of } + \notag \\
+%        &= \BAR{b+a} \text{ by commutativity in } \bZ \notag \\
+%        &= \BAR{b} + \BAR{a} \notag
+%\end{align}
+
+%To see that $+$ is associative, note that
+%\begin{align}
+%(\BAR{a}+\BAR{b}) + \BAR{c}
+%        &= \BAR{a+b} + \BAR{c} \notag \\
+%        &= \BAR{(a+b)+c} \notag \\
+%        &= \BAR{a+(b+c)} \notag \\
+%        &= \BAR{a} + \BAR{b+c} \notag \\
+%        &= \BAR{a} + (\BAR{b}+ \BAR{c}). \notag
+%\end{align}
+
+To see that $\BAR{0}$ is an additive identity, note that
+$\BAR{0} + \BAR{a} = \BAR{0+a} = \BAR{a}$.
+
+The additive inverse of $\BAR{a}$ is $\BAR{-a}$, since
+$\BAR{a} + \BAR{-a} = \BAR{a-a} = \BAR{0}$.
+\end{proof}
+
+For any $k \in \bN$ and any $\BAR{a} \in \bZ_{n}$, define $k\BAR{a}$
+to be $\BAR{a}$ added to itself $k$ times:
+\[ k\BAR{a} = \sum_{i=1}^{k} \BAR{a} . \]
+
+\begin{Prop}
+Let $k \in \bN$ and $\BAR{a} \in \bZ_{n}$. Then $k\BAR{a} =
+\BAR{ka}$.
+\end{Prop}
+
+\begin{proof}
+%Since addition is associative, we can ignore parentheses.
+%Then
+$k\BAR{a} = \sum_{i=1}^{k} \BAR{a} = \BAR{\sum_{i=1}^{k} a} = \BAR{ka}$.
+\end{proof}
+
+In $\bZ_n$, we have $n \BAR{a} = \BAR{na} = \BAR{0}$.
+So, some multiple of $\BAR{a}$ is zero; thus there is a smallest positive integer $k$
+such that $k\BAR{a} = 0$.
+
+\begin{Def}
+Let $\BAR{a} \in \bZ_{n}$. Define the {\em additive order} of $\BAR{a}$ to be
+smallest positive integer $k$ such that $k\BAR{a} = \BAR{0}$.  The additive
+order of $\BAR{a}$ is denoted $\ord_+(\BAR{a})$.
+\end{Def}
+
+\begin{Prop}
+Let $\BAR{a} \in \bZ_{n}$ and let $\ord_+(\BAR{a}) = k$.
+Then \\
+\BOLD{(a)} $j\BAR{a} = \BAR{0} \IFF k \divides j$; \\
+\BOLD{(b)} $n\BAR{a} = \BAR{0}$; \\
+\BOLD{(c)} $k \divides n$.
+\end{Prop}
+
+\begin{proof}
+\text{ }
+
+\BOLD{(a)} If $k \divides j$, then $j = lk$ for some $l \in \bZ$. In
+this case, $j\BAR{a} = l\BAR{0} = \BAR{0}$.
+
+Conversely, suppose that $j\BAR{a} = \BAR{0}$.
+Write $j = qk + r$, where $0 \le r < k$.
+Then $j\BAR{a} = qk\BAR{a} + r\BAR{a} = r\BAR{a}$ since $k\BAR{a} = 0$.
+But $k$ is the smallest positive integer such that $k\BAR{a} = \BAR{0}$.
+Thus $r = 0$, and $j = qk$.  Thus $k \divides j$.
+
+\BOLD{(b)}
+Note that $n\BAR{a} = \BAR{na} = \BAR{0}$.
+Thus $n\BAR{a} = \BAR{0}$.
+
+\BOLD{(c)}
+By (b), $n\BAR{a} = \BAR{0}$.
+Thus $k \divides n$ by part (a).
+\end{proof}
+
+\begin{Prop}
+Let $\BAR{a} \in \bZ_{n}$ and let $d = \gcd(a,n)$. Then $\ord_+(\BAR{a}) = \frac{n}{d}$.
+\end{Prop}
+
+\begin{proof}
+Let $k = \ord(\BAR{a})$.  Now $\frac{n}{d} \BAR{a} = \BAR{\frac{na}{d}} = n \BAR{\frac{a}{d}} = \BAR{0}$;
+thus $k \divides \frac{n}{d}$.
+
+On the other hand, $k\BAR{a} = \BAR{0}$, so $ka = nl$ for some $l \in \bZ$.
+Dividing by $d$ gives $k\frac{a}{d} = \frac{n}{d} l$.
+Thus $\frac{n}{d} \divides k \frac{a}{d}$, and since $\gcd(\frac{a}{d},\frac{n}{d}) = 1$,
+we have $\frac{n}{d} \divides k$.
+
+Thus $k \divides \frac{n}{d}$ and $\frac{n}{d} \divides k$, and since both are positive
+they must be equal.
+\end{proof}
+
+\begin{Exm}
+Let $n = 24$ and $a = 20$.
+Now $\gcd(a,n) = 4$, so $\ord_+(a) = \frac{24}{4} = 6$.
+Indeed, $6 \cdot 20 = 120$ is the smallest multiple of $20$
+which is divisible by $24$.
+\end{Exm}
+
+\begin{Exm}
+Let $p = 7$ and consider $\bZ_p$.  The order of every nonzero element is $7$.
+\end{Exm}
+
+\newpage
+
+\section{Properties of Multiplication}
+
+\begin{Prop}
+Multiplication on $\bZ_{n}$ is commutative and associative, with
+identity element $\BAR{1}$. Furthermore, multiplication distributes
+over addition.
+%\[ \BAR{a} \cdot (\BAR{b} + \BAR{c}) =
+%        (\BAR{a}\cdot\BAR{b}) + (\BAR{a}\cdot\BAR{c}) \]
+%for all $\BAR{a},\BAR{b},\BAR{c} \in \bZ$.
+\end{Prop}
+
+\begin{proof}
+Select $a,b,c \in \bZ$ so that $\BAR{a}$, $\BAR{b}$, and $\BAR{c}$
+are arbitrary members of $\bZ_{n}$.
+
+To see that multiplication is commutative, compute
+\[ \BAR{a}\cdot\BAR{b} = \BAR{ab} = \BAR{ba} = \BAR{b} \cdot \BAR{a} . \]
+
+To see that multiplication is associative, compute
+\[ (\BAR{a}\cdot\BAR{b})\cdot\BAR{c} = \BAR{ab}\cdot\BAR{c}
+        = \BAR{abc} = \BAR{a}\cdot\BAR{bc}
+        = \BAR{a}\cdot(\BAR{b}\cdot\BAR{c}) . \]
+
+To see that $\BAR{1}$ is a multiplicative identity, compute
+$\BAR{a}\cdot\BAR{1} = \BAR{a \cdot 1} = \BAR{a}
+        = \BAR{1 \cdot a} = \BAR{1} \cdot \BAR{a}$.
+
+To see the multiplication distributes over addition, compute
+\[ \BAR{a}\cdot(\BAR{b}+\BAR{c}) = \BAR{a}\cdot\BAR{b+c}
+        = \BAR{a(b+c)} = \BAR{ab+ac} = \BAR{ab}+\BAR{ac}
+        = (\BAR{a}\cdot\BAR{b})+(\BAR{a}\cdot\BAR{c}) . \]
+\end{proof}
+
+\begin{Prop}
+Let $\BAR{a} \in \bZ_{n}$. Then $\BAR{a}\cdot\BAR{0} =
+\BAR{0}\cdot\BAR{a} = \BAR{0}$.
+\end{Prop}
+
+\begin{proof}
+By definition of multiplication in $\bZ_{n}$, $\BAR{a} \cdot \BAR{0}
+= \BAR{a \cdot 0}
+        = \BAR{0} = \BAR{0 \cdot a} = \BAR{0} \cdot \BAR{a}$.
+\end{proof}
+
+\begin{Def}
+Let $n \in \bZ$, $n \ge 2$, and let $\BAR{a} \in \bZ_n$.
+We say that $\BAR{a}$ is {\em invertible} in $\bZ_n$ if there
+exists an element $\BAR{b} \in \bZ_{n}$ such that
+$\BAR{a}\cdot\BAR{b} = \BAR{1}$.
+\end{Def}
+
+\begin{Prop} \label{GCDInv}
+Let $\BAR{a} \in \bZ_{n}$.
+Then $\BAR{a}$ is invertible if and only if $\gcd(a,n) = 1$.
+\end{Prop}
+
+\begin{proof}
+\text{ }
+
+($\IMP$) Suppose that $\BAR{a}$ is invertible, and let $\BAR{b}$ be
+its inverse. Then $\BAR{ab} = \BAR{1}$, so $ab \equiv 1 \MOD{n}$.
+That is, $kn = ab-1$ for some $k \in \bZ$. Thus $ab + (-k)n = 1$.
+By Proposition \ref{GCDOne}, $\gcd(a,n) = 1$.
+
+($\IMB$) Suppose that $\gcd(a,n) = 1$. Then there exist $x,y \in
+\bZ$ such that $xa + yn = 1$. Then $\BAR{x} \cdot \BAR{a} + \BAR{y}
+\cdot \BAR{n} = \BAR{1}$. But $\BAR{n} = \BAR{0}$, so $\BAR{y} \cdot
+\BAR{n} = \BAR{0}$. Thus $\BAR{x} \cdot \BAR{a} = \BAR{1}$, and
+$\BAR{x}$ is the inverse of $\BAR{a}$, so $\BAR{a}$ is invertible.
+\end{proof}
+
+\begin{Exm}
+Let $p \in \bN$ be a prime number. \\
+Then every nonzero element of $\bZ_{p}$ is invertible, because each nonzero positive integer
+less than $p$ is relatively prime to $p$.
+\end{Exm}
+
+\begin{Def}
+Let $n \in \bZ$ with $n \ge 2$, and let $\BAR{a} \in \bZ_n$ be nonzero.
+We say that $\BAR{a}$ is a {\em zero divisor} if
+there exists $\BAR{b} \in \bZ_n$ which is nonzero
+such that $\BAR{a} \BAR{b} = \BAR{0}$.
+\end{Def}
+
+\begin{Prop} \label{InvNotZD}
+Let $n \in \bZ$ with $n \ge 2$, and let $\BAR{a} \in \bZ_n$.
+If $\BAR{a}$ is invertible, then $\BAR{a}$ is not a zero divisor.
+\end{Prop}
+
+\begin{proof}
+Suppose $a$ is invertible, and let $b \in \bZ$
+such that $a b = 0$.
+Multiply on the left by $a^{-1}$ to get
+$a^{-1} a b = a^{-1} \cdot 0$,
+whence $b = 0$.  This shows that $a$ is not a zero divisor,
+because the only element in $\bZ_n$ which can be multiplied with $a$
+to produce $0$ is $0$ itself.
+\end{proof}
+
+\begin{Exm}
+Let $n = 6$; in $\bZ_{6}$, the invertible elements are $\BAR{1}$ and $\BAR{5}$.
+The zero divisors are $\BAR{2}$, $\BAR{3}$, and $\BAR{4}$.
+To see this, consider $\BAR{2} \cdot \BAR{3} = \BAR{6} = 0$,
+and $\BAR{3} \cdot \BAR{4} = \BAR{12} = 0$.
+\end{Exm}
+
+\newpage
+
+\begin{Prop}
+Let $n \in \bZ$ with $n \ge 2$, and let $\BAR{a} \in \bZ_n$ be nonzero.
+Then $\BAR{a}$ is a zero divisor if and only if $\gcd(a,n) \ge 2$.
+\end{Prop}
+
+\begin{proof}
+Let $d = \gcd(a,n)$.
+
+Suppose that $d = 1$.  Then $\BAR{a}$ is invertible by Proposition \ref{GCDInv}, so $\BAR{a}$ is not
+a zero divisor by Proposition \ref{InvNotZD}.
+
+Suppose that $d \ge 2$.  Using arithmetic in $\bZ$, the Euclidean algorithm
+dictates that there exist $x,y \in \bZ$ such that $ax + ny = d$.
+We also have $d \divides n$.
+Then there exists $b \in \bZ$ such that $bd = n$, and since $d \ge 2$, we have $0 < b < n$.
+Applying the residue map to $ax + ny = d$ gives $\BAR{a} \BAR{x} + \BAR{n} \BAR{y} = \BAR{d}$,
+and since $\BAR{n} = \BAR{0}$, we have $\BAR{a} \BAR{x} = \BAR{d}$.
+Multiply this equation by $\BAR{b}$ to get
+\[ \BAR{a} \BAR{x} \BAR{b} = \BAR{db} = \BAR{n} = \BAR{0} . \]
+Thus $\BAR{a}$ is a zero divisor.
+\end{proof}
+
+\begin{Def}
+The {\em group of units} of $\bZ_n$ is
+\[ \bZ_n^* = \{ \BAR{a} \in \bZ_n \mid \gcd(a,n) = 1 \} . \]
+The {\em Euler phi function} is defined by $\phi(n) = \modu{\bZ_n^*}$.
+\end{Def}
+
+Thus $\BAR{a} \in \bZ_n^*$ if and only if $\BAR{a}$ is invertible in $\bZ_n$.
+The next proposition says that $\bZ_n^*$ is closed under multiplication.
+
+\begin{Prop}
+Let $n \in \bZ$, $n \ge 2$, and let $\BAR{a},\BAR{b} \in \bZ$ be invertible.
+Then $\BAR{a} \BAR{b}$ is invertible.
+\end{Prop}
+
+\begin{proof}
+Clearly, $(\BAR{a} \BAR{b}) = \BAR{b}^{-1} \BAR{a}^{-1}$, since
+$(\BAR{a} \BAR{b})(\BAR{b}^{-1} \BAR{a}^{-1}) = \BAR{a} ( \BAR{b} \BAR{b}^{-1} ) \BAR{a}^{-1}
+ %   = \BAR{a} \cdot \BAR{1} \cdot \BAR{a}^{-1}
+    = \BAR{a} \BAR{a}^{-1} = \BAR{1}$.
+\end{proof}
+
+For example,
+\begin{itemize}
+\item $\bZ_p^* = \{ 1, \dots, p-1 \}$, if $p$ is prime;
+\item $\bZ_6^* = \{ 1,5 \}$;
+\item $\bZ_{12}^* = \{ 1,5,7,11 \}$;
+\item $\bZ_{15}^* = \{ 1,2,4,6,7,8,11,13,14 \}$.
+\end{itemize}
+
+\begin{comment}
+\begin{Def}
+The {\em Euler phi function} is defined by
+\[ \phi : \bN \to \bN \quad \text{ given by } \quad
+\phi(n) =
+\begin{cases}
+    0   \quad &\text{ if $n = 0$}; \\
+    1   \quad &\text{ if $n = 0$};\\
+    \modu{\bZ_n^*} \quad &\text{ if $n \ge 2$}.
+\end{cases}
+\]
+\end{Def}
+
+Thus, for $n \ge 2$, $\phi(n)$ is the number of positive integers less than $n$ which are relatively
+prime to $n$.  For example,
+\[ \phi(2) = 1, \; \phi(3) = 2, \; \phi(4) = 2 , \; \phi(5) = 4 , \; \phi(6) = 2 , \; \phi(7) = 6,
+    \; \phi(8) = 4 , \; \phi(9) = 6 . \]
+In general, if $p$ is prime, then $\phi(p) = p-1$.
+\end{comment}
+
+\begin{Def}
+Let $n \in \bZ$, $n \ge 2$, and let $\BAR{a} \in \bZ_n^*$.
+The {\em multiplicative order} of $\BAR{a}$, denoted $\ord_*(\BAR{a})$ is the smallest positive integer $k$
+such that $\BAR{a}^k = \BAR{1}$.
+\end{Def}
+
+\begin{Exm}
+Find $\ord_*(\BAR{7})$ in $\bZ_{15}^*$.
+\end{Exm}
+
+\begin{proof}[Solution]
+We have
+\begin{align*}
+    \BAR{7}^2 &= \BAR{49} = \BAR{4} ; \\
+    \BAR{7}^3 &= \BAR{4} \cdot \BAR{7} = \BAR{28} = \BAR{13} ; \\
+    \BAR{7}^4 &= \BAR{13} \cdot \BAR{7} = \BAR{91} = \BAR{1} .
+\end{align*}
+Thus $\ord_*(\BAR{7}) = 4$.
+\end{proof}
+
+\begin{comment}
+\newpage
+
+\begin{Prop} \BOLD{(Euler's Theorem)} \\
+Let $a,n \in \bZ$ with $n \ge 2$ and $\gcd(a,n) = 1$.
+Then
+\[ a^{\phi(n)} \equiv 1 \MOD{n} . \]
+\end{Prop}
+
+\begin{proof}
+This is equivalent to showing that $\BAR{a}^{\phi(n)} = \BAR{1}$.
+Since $\gcd(a,n) = 1$, $\BAR{a}$ is invertible and $\BAR{a} \in \bZ_n^*$.
+
+Consider the function $f :\bN \to \bZ_n^*$ given by $f(i) = \BAR{a}^i$.
+Since $\bN$ is infinite and $\bZ_n^*$ is finite, this function cannot be injective;
+let $j$ be the smallest positive integer such that $f(j) = f(k)$ for some $k > j$.
+Then $\BAR{a}^j = \BAR{a}^k$, and since $\BAR{a}$ is invertible, so is $\BAR{a}^{j}$,
+with inverse $\BAR{a}^{-j}$.
+Thus $\BAR{a}^{k-j} = \BAR{1}$.
+
+Consider the function $\alpha : \bZ_n^* \to \bZ_n^*$ given by $\alpha(\BAR{x}) = \BAR{a}\BAR{x}$.
+This function has an inverse $\BAR{x} \mapsto \BAR{a}^{-1} \BAR{x}$,
+so it is bijective.
+\end{comment}
+
+\newpage
+
+\section{Casting Out $n$'s}
+
+The process of {\em casting out $n$'s} involves subtracting $n$ from a number
+until one arrives at a number less than $n$.  Clearly, this number is the remainder
+upon division by $n$, so it is related to modular arithmetic.
+
+The method of casting out $n$'s, together with decimal notation,
+led Arabs of 1500 years ago to discover certain divisibility criteria.
+We demonstrate this in modern notation.
+
+Fix $n \in \bZ$ with $n \ge 0$.  For $a \in \bZ$, let $\BAR{a}$ denote the remainder when
+$a$ is divide by $n$.  The last proposition states that $\BAR{a+b} \equiv \BAR{a} + \BAR{b}$
+and $\BAR{ab} \equiv \BAR{a} \BAR{b}$, modulo $n$.
+
+If $d_0,d_1, \dots, d_r$ are the digits of $a \in \bN$ (where $0 \le d_i \le 9$), then
+\[ a = \sum_{i=0}^r d_i \cdot 10^i . \]
+The idea of casting out $n$'s revolves around the fact that
+\[ a \equiv \sum_{i=0}^r \BAR{d_i} \cdot \BAR{10}^i \MOD{n} . \]
+
+\begin{Prop}
+\BOLD{(Casting Out $3$'s and $9$'s)} \\
+Let $n = 3$ or $n = 9$.  Let $a,s \in \bZ$ be given by
+\[ a = \sum_{i=0}^{k} d_i \cdot 10^i \quad \text{ and } \quad s = \sum_{i=0}^k d_i . \]
+Then $a$ is divisible by $n$ if and only if $s$ is divisible by $n$.
+\end{Prop}
+
+\begin{proof}
+In $\bZ_3$ or $\bZ_9$, we have $\BAR{10} = \BAR{1}$.
+Thus
+\[ \BAR{a} = \BAR{\sum_{i=0}^k d_i \cdot 10^i}
+    = \sum_{i=0}^k \BAR{d_i} \cdot \BAR{10}^i \\
+    = \sum_{i=0}^k \BAR{d_i}
+    = \BAR{s}. \]
+So $a$ and $s$ have the same remainder upon division by $n$,
+and in particular $a$ is divisible by $n$ if and only if $s$ is
+divisible by $n$.
+\end{proof}
+
+\begin{Prop}
+\BOLD{(Casting Out $11$'s)} \\
+Let $n = 11$.  Let $a,s \in \bZ$ be given by
+\[ a = \sum_{i=0}^{k} d_i \cdot 10^i \quad \text{ and } \quad s = \sum_{i=0}^k (-1)^i d_i . \]
+Then $a$ is divisible by $n$ if and only if $s$ is divisible by $n$.
+\end{Prop}
+
+\begin{proof}
+In $\bZ_{11}$, we have $10 \equiv -1 \MOD{n}$.
+Thus
+\[ \BAR{a} = \BAR{\sum_{i=0}^k d_i \cdot 10^i}
+    = \sum_{i=0}^k \BAR{d_i} \cdot \BAR{10}^i
+    = \sum_{i=0}^k \BAR{d_i} (\BAR{-1})^i \\
+    = \BAR{s}. \]
+Thus $a$ is divisible by $n$ if and only if $s$ is divisible by $n$.
+\end{proof}
+
+
+\newpage
+
+\section{Algebraic Equations in $\bZ_{n}$}
+
+We now turn our attention to the question of when an equation,
+such as $\BAR{14}x = \BAR{1}$ or $x^{2}+\BAR{1} = \BAR{0}$, has a solution in $\bZ_{n}$,
+and how many solutions it has.
+For example, $\BAR{14}x = \BAR{1}$ has a solution if and only if $\BAR{14}$ is invertible
+in $\bZ_{n}$, and this is the case if and only if $n$ and $14$
+are relatively prime.  In fact, we have an explicit technique for
+finding the inverse $\BAR{14}$.  This technique makes repeated use of
+the division algorithm.
+
+Suppose $n = 33$.  Then $14$ and $33$ are relatively prime,
+so there exist integers $x$ and $y$ such that $14x  + 33y = 1$.
+To find them, we divide:
+\begin{itemize}
+\item $33 = 14 \cdot 2 + 5$;
+\item $14 = 5 \cdot 2 + 4$
+\item $5 = 4 \cdot 1 + 1$;
+\item $2 = 1 \cdot 2 + 0$.
+\end{itemize}
+
+The second to last remainder is $1$, so $\gcd(14,33) = 1$.
+Now work backwards to find $x$ and $y$:
+\begin{itemize}
+\item $1 = 5 - 4$;
+\item $1 = 5 - (14-5 \cdot 2) = 5 \cdot 3 - 14 \cdot 1$;
+\item $1 = (33 - 14 \cdot 2) \cdot 3 - 14 \cdot 1 = 33 \cdot 3 - 14 \cdot 7$.
+\end{itemize}
+
+Thus the inverse of $\BAR{14}$ in $\bZ_{33}$ is $\BAR{-7} = \BAR{26}$.
+
+The equation $x^{2}+\BAR{1} = \BAR{0}$
+is more interesting.  To understand it, note
+that negative $\BAR{1}$ exists in $\bZ_{n}$ as $\BAR{n-1}$.
+So a solution to the equation $x^{2} + \BAR{1} = \BAR{0}$ would be a square root of
+negative $\BAR{1}$ in $\bZ_{n}$.
+%It can be shown that when $n$ is prime,
+%then this has a solution
+%if and only if $4 \divides (n-1)$.
+For example, in $\bZ_{5}$, we have $\BAR{2}^{2} = \BAR{4} = -\BAR{1}$.
+
+It is also possible that a quadratic equation, such as $x^{2} - \BAR{1} = \BAR{0}$,
+can have more than two solutions in $\bZ_{n}$.
+Note that $x^{2} - \BAR{1} = (x+\BAR{1})(x-\BAR{1})$, even in $\bZ_{n}$.
+Suppose that $n = 15$.
+Then $x = \BAR{1}$ and $x = -\BAR{1} = \BAR{14}$ are solutions, but so is $\BAR{4}$,
+since $(\BAR{4}+\BAR{1})(\BAR{4}-\BAR{1}) = \BAR{5} \cdot \BAR{3} = \BAR{0}$ in $\bZ_{15}$.
+
+However, suppose that $n = p$ is a prime number.
+Then in $\bZ_{p}$, a quadratic equation can have at most $2$ roots.
+This is because $\bZ_{p}$ has no zero divisors.
+If the quadratic has a root, it factors; then if the product of
+the factors is zero, one of them must be zero.
+
+For example, let us find the roots of $x^{2} + \BAR{8}x + \BAR{1} = \BAR{0}$ in $\bZ_{11}$.
+Now $8 \equiv -3 \MOD{11}$ and $1 \equiv -10 \MOD{11}$,
+so our equation becomes $x^{2} - \BAR{3}x - \BAR{10} = \BAR{0}$.
+This factors as $(x-\BAR{5})(x+\BAR{2}) = 0$.  Since $11$ is prime,
+the only roots are $\BAR{8}$ and $-\BAR{2} = \BAR{8}$.
+
+\newpage
+
+\section{Exercises}
+
+\begin{Exc}
+Let $a,b,c \in \bN$ be positive.  Show that
+\begin{itemize}
+\ITEM{a} $a \divides a$; \ITEM{b} $a \divides b$ and $b \divides
+a$ implies $a = b$; \ITEM{c} $a \divides b$ and $b \divides c$
+implies $a \divides c$.
+\end{itemize}
+\end{Exc}
+
+\begin{Exc}
+Let $m,n,d \in \bZ$ with $d = \gcd(m,n)$.
+Show that %$\lcm(m,n)$ exists, and in fact,
+\[ \lcm(m,n) = \frac{mn}{d} . \]
+\end{Exc}
+
+\begin{Exc}
+Construct a proof of the Euclidean Algorithm using
+%, using Proposition \ref{GCDObvious},
+Proposition \ref{GCDRecursive} and induction.
+\end{Exc}
+
+\begin{Exc}
+Let $n \in \bZ$ with $n \ge 2$.  Show that if $n$ is not a prime number,
+then $\bZ_{n}$ contains zero divisors.
+\end{Exc}
+
+\begin{Exc}
+Let $n \in \bZ$ with $n \ge 2$, and let $\BAR{a} \in \bZ_{n}$ be a nonzero element.
+Show that $\BAR{a}$ is invertible if and only if $\BAR{a}$ is not a zero divisor.
+\end{Exc}
+
+\begin{Exc}
+Find the additive order of $\BAR{6}$, $\BAR{11}$, $\BAR{18}$, and $\BAR{28}$ in $\bZ_{36}$.
+\end{Exc}
+
+\begin{Exc}
+Find $\bZ_{48}^*$.
+\end{Exc}
+
+\begin{Exc}
+Find $\phi(100)$.
+\end{Exc}
+
+\begin{Exc}
+Find the multiplicative order of $\BAR{10}$ in $\bZ_{21}^*$.
+\end{Exc}
+
+\begin{Exc}
+Find the inverse of $\BAR{15}$ in $\bZ_{49}$.
+\end{Exc}
+
+\begin{Exc}
+Solve the equation $\BAR{17}x = \BAR{23}$ in $\bZ_{71}$.
+\end{Exc}
+
+\begin{Exc}
+Solve the equation $x^2 - \BAR{5}x - \BAR{2} = \BAR{0}$ in $\bZ_{11}$.
+\end{Exc}
+
+\begin{Exc}
+Solve the equation $x^2 - \BAR{5}x + \BAR{4} = 0$ in $\bZ_{6}$.
+\end{Exc}
+
+\begin{Exc}
+Find all square roots of $-\BAR{1}$ in $\bZ_{101}$.
+\end{Exc}
+
+\end{document}

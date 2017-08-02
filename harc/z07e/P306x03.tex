@@ -1,0 +1,112 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\include{M306}
+
+\newcommand{\shape}{\NAME{shape}}
+
+\pagestyle{empty}
+
+\oddsidemargin  0 pt
+\evensidemargin 0 pt
+\marginparwidth 1 cm
+\marginparsep 0 pt
+
+\topmargin 0 pt
+\headheight 0 pt
+\headsep 0 pt
+\topskip 0 pt
+
+\footskip 0 pt
+\textheight 9 in
+\textwidth 6.5 in
+\setlength{\unitlength}{1 in}
+
+\begin{document}
+
+\noindent {\large {\sc Math 3063 } }
+{\small {\sc Abstract Algebra}}
+\hspace{2 cm}
+{\normalsize Project 3}
+\hspace{2.4 cm}
+{\large Name:}
+
+\noindent
+\hspace{2.5 cm}
+{\small {\sc Prof. Paul Bailey} }
+\hspace{2 cm}
+{\normalsize \today}
+
+\vspace{0.5 cm}
+
+Complete these problems and turn in the solution by Monday, March 12, 2007.
+Attach this page to the front of the solutions.  Solutions should be self explanatory
+and written in complete sentences.
+
+\begin{center}
+\BOLD{Groups}
+\end{center}
+
+\begin{Def}
+A {\em group} $(G,\cdot)$ is a set $G$ together with a binary operation
+\[ \cdot : G \cross G \to G \]
+such that
+\begin{itemize}
+\ITEM{G1} $(g_1 g_2) g_3 = g_1(g_2 g_3)$ for every $g_1,g_2,g_3 \in G$;
+\ITEM{G2} there exists $1 \in G$ such that $g \cdot 1 = 1 \cdot g = g$ for every $g \in G$;
+\ITEM{G3} for every $g \in G$ there exists $g^{-1} \in G$ such that $g g^{-1} = g^{-1} g = 1$.
+\end{itemize}
+\end{Def}
+
+\begin{Prob}
+Let $X$ be a set and define an binary operation
+\[ \symdif : \scr{P}(X) \cross \scr{P}(X) \to \scr{P}(X) \quad \text{ by } \quad
+    A \symdif B = (A \cup B) \remove (A \cap B) . \]
+Show that $(\scr{P}(X),\symdif)$ is a group.
+\end{Prob}
+
+\begin{Def}
+A group $G$ is {\em abelian} if $g_1 g_2 = g_2 g_1$ for every $g_1,g_2 \in G$.
+\end{Def}
+
+\begin{Prob}
+Let $G$ be a group such that $g^2 = 1$ for every $g \in G$.
+Show that $G$ is abelian.
+\end{Prob}
+
+\begin{Def}
+Let $G$ be a group and let $H \subset G$.  We say that $H$ is a {\em subgroup} of $G$,
+and write $H \le G$, if
+\begin{itemize}
+\ITEM{S0} $H$ is nonempty;
+\ITEM{S1} $h_1,h_2 \in H$ implies $h_1 h_2 \in H$;
+\ITEM{S2} $h \in H$ implies $h^{-1} \in H$.
+\end{itemize}
+\end{Def}
+
+\begin{Prob}
+Let $G$ be a group.  The {\em center} of $G$ is
+\[ Z(G) = \{ h \in G \mid hg = gh \text{ for all } g \in G \} . \]
+Show that $Z(G) \le G$.
+\end{Prob}
+
+\begin{Prob}
+Let $G$ be a group and let $g_1,g_2 \in G$.
+We say that $g_1$ is {\em conjugate} to $g_2$, and write $g_1 \sim g_2$,
+if there exists $h \in G$ such that $g_1 h = h g_2$.
+\begin{itemize}
+\ITEM{a} Show that $\sim$ is an equivalence relation.
+\ITEM{b} List the equivalence classes of $\sim$ on $S_4$.
+\end{itemize}
+\end{Prob}
+
+\begin{Prob}
+Let $T$ denote a regular tetrahedron, inscribed in a sphere.
+Label the vertices $1$, $2$, $3$, $4$.
+Let $G$ denote the set of rotations of the sphere which permute the vertices;
+we may view $G$ as a subgroup of $S_4$.  List the elements of $G$ in disjoint
+cycle notation, and construct a Cayley table for the group $G$.
+\end{Prob}
+
+\end{document}

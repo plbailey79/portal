@@ -1,0 +1,177 @@
+// rijnfld.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+
+typedef unsigned __int8   BYT;
+typedef unsigned __int16  SYL;
+
+typedef union
+{ SYL syl;
+  BYT byt[2];
+} DUB;
+
+// 16-bit polynomial
+
+int poldeg(SYL a)
+{ int k=0;
+  while (a) { a>>=1; k++; }
+  return k; }
+
+SYL poladd(SYL a,SYL b)
+{ return a^b; }
+
+SYL polsub(SYL a,SYL b)
+{ return a^b; }
+
+SYL polmul(SYL a,SYL b)
+{ SYL c=0;
+  int k=0;
+  while (b)
+  { if (b&1) c^=a<<k;
+    b>>=1;
+    k++; }
+  return c; }
+
+SYL poldiv(SYL a,SYL b,SYL& q,SYL& r)
+{ int d,e=poldeg(b);
+  q=0;
+  r=a;
+  while ((d=(poldeg(r)-e))>=0)
+  { q^=SYL(1)<<d;
+    r^=b<<d; }
+  return q; }
+
+SYL poleuc(SYL a,SYL b,SYL& x,SYL& y)
+{ SYL d,q,r,t;
+  x=1; y=0;
+  poldiv(b,a,q,r);
+  if (r==0) return a;
+  //printf("%u = (%u)(%u) + %u\n",b,a,q,r);
+  d=poleuc(r,a,x,y);
+  t=x; x=y^polmul(q,x); y=t;
+  //printf("%u = (%u)(%u) + (%u)(%u)\n",d,x,a,y,b);
+  return d; }
+
+SYL polsqr(SYL a)
+{ return SYL(1)<<(poldeg(a)/2+1); }
+
+SYL polchk(SYL a)
+{ SYL b=1,q,r,e=polsqr(a);
+  while (++b<e)
+  { poldiv(a,b,q,r);
+    if (r==0) return b; }
+  return 1; }
+
+SYL polirr(SYL a,int d)
+{ SYL s=(SYL(1)<<d),t=(SYL(1)<<(d+1));
+  if (a<s) a=s;
+  while (a<t)
+  { if (polchk(a)<2) return a;
+    a++; }
+  a=s;
+  while (a<t)
+  { if (polchk(a)<2) return a; 
+    a++; }
+  return 0; }
+
+void polshw(SYL a)
+{ char buf[17];
+  int k=16;
+  buf[16]=0;
+  while (k-->0)
+  { buf[k]=char(a&SYL(1))+'0'; a>>=1; }
+  printf("%s",buf); }
+
+////////////////////////
+// mod irr
+
+SYL irrpol=0;
+BYT irrbyt=0;
+
+void irrset(SYL a)
+{ irrpol=polirr(a,8);
+  irrbyt=BYT(irrpol); }
+
+BYT bytmul(BYT a,BYT b);
+BYT bytinv(BYT a);
+
+BYT bytpol(SYL a)
+{ DUB dub;
+  dub.syl=a;
+  if (dub.byt[1]) dub.byt[0]^=bytmul(dub.byt[1],irrbyt);
+  return dub.byt[0]; }
+
+BYT bytshf(BYT a,int k)
+{ DUB dub;
+  dub.syl=SYL(a)<<k;
+  if (dub.byt[1]) dub.byt[0]^=bytmul(dub.byt[1],irrbyt);
+  return dub.byt[0]; }
+
+BYT bytadd(BYT a,BYT b)
+{ return a^b; }
+
+BYT bytsub(BYT a,BYT b)
+{ return a^b; }
+
+BYT bytmul(BYT a,BYT b)
+{ BYT c=0;
+  int k=0;
+  while (b)
+  { if (b&1) c^=bytshf(a,k);
+    b>>=1;
+    k++; }
+  return c; }
+
+BYT bytdiv(BYT a,BYT b)
+{ return a*bytinv(b); }
+
+BYT bytinv(BYT a)
+{ SYL z=a,x,y;
+  if (a==0) return 0;
+  poleuc(z,irrpol,x,y);
+  return bytpol(x); }
+
+void bytshw(SYL a)
+{ char buf[9];
+  int k=8;
+  buf[8]=0;
+  while (k-->0)
+  { buf[k]=char(a&BYT(1))+'0'; a>>=1; }
+  printf("%s",buf); }
+
+void irrlst(void)
+{ SYL a,b,q;
+  int k=0;
+  a=SYL(1)<<8;
+  q=SYL(1)<<9;
+  printf("%u  %u  ",a,q); bytshw(a); printf("\n");
+  while (++a<q)
+  { b=polchk(a);
+    if (b>1) continue;
+    polshw(a);
+    printf("  %u  %d\n",BYT(a),++k); } }
+
+void test1(void)
+{ irrset(283);
+  printf("irrpol: %u  irrbyt: %u  ",irrpol,irrbyt); 
+  bytshw(irrbyt); printf("\n");
+
+  BYT a=251,b=5,c,d,e,f;
+  c=bytadd(a,b);
+  d=bytmul(a,b);
+  e=bytdiv(a,b);
+  f=bytinv(a);
+  printf("a: %u  b: %u  a+b: %u  a*b: %u  a/b: %u\n",a,b,c,d,e);
+  printf("a inv: %u\n",f);
+  printf("a inv inv: %u\n",bytinv(f));
+
+  printf("a/b*b: %u\n",bytmul(e,b));
+  printf("1/a*a: %u\n",bytmul(a,f)); }
+
+void test2(void)
+{ irrlst(); }
+
+int main(int argc, char* argv[])
+{ test1();
+  return 0; }

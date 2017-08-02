@@ -1,0 +1,68 @@
+// vigenere.cpp : implements the vigenere cipher
+
+#include "stdafx.h"
+
+#include <string.h>
+
+#pragma warning(disable: 4996)  // Disable (nonstandard) "deprecated" warning
+#pragma warning(disable: 4267)  // Disable (nonstandard) int len=strlen(str) warning
+
+#define LINLEN 60
+
+char chrupr(char chr)
+{ if (chr >= 'A' && chr <= 'Z') return chr;
+  if (chr >= 'a' && chr <= 'z') return chr-32;
+  return 0; }
+
+void keyinv(char* key)
+{ char* inp=key;
+  char chr;
+  if (*inp=='-') inp++;
+  while (chr=*inp++)
+  { if (chr=chrupr(chr)) 
+    { *key++=26-chr+'A'+'A'; } }
+  *key=0; }
+
+void keymak(char* key)
+{ char* inp=key;
+  char chr;
+  if (*inp=='-') return keyinv(key);
+  while (chr=*inp++)
+  { if (chr=chrupr(chr))
+    { *key++=chr; } }
+  *key=0; }
+
+void vigenere(FILE *ori,FILE *trg,char* key)
+{ char chr;
+  int cnt=0,len=0;
+  keymak(key);
+  printf("key: %s\n",key);
+  len=strlen(key);
+  while (1)
+  { chr=fgetc(ori);
+    if (chr==EOF) break;
+    if (chr=chrupr(chr))
+    { chr=(((chr-'A')+(key[cnt%len]-'A'))%26)+'A';
+      fputc(chr,trg);
+      if (++cnt%LINLEN == 0) fputc('\n',trg); } }
+  if (cnt%LINLEN) fputc('\n',trg); }
+
+int main(int argc, char* argv[])
+{ FILE* ori;
+  FILE* trg;
+  if (argc < 4)
+  { printf("VIGENERE <original file> <target file> <key>\n");
+    return 0; }
+  ori = fopen(argv[1],"rt");
+  if (!ori)
+  { printf("Cannot open original file %s\n",argv[1]);
+    return 1; }
+  trg = fopen(argv[2],"wt");
+  if (!trg)
+  { printf("Cannot open target file %s\n",argv[2]);
+    fclose(ori);
+    return 1; }
+  vigenere(ori,trg,argv[3]);
+  fclose(trg);
+  fclose(ori);
+	return 0; }

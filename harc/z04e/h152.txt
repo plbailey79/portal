@@ -1,0 +1,27 @@
+Calculus I
+Homework Assignments
+
+Thu Jan 15	Handout on Set Operations
+Fri Jan 16	Section P.1 # 3, 5, 7, 15, 21, 25, 33, 34
+Wed Jan 21	Section P.2 # 3, 7, 9, 13, 14, 15, 19, 27, 29, 35, 49
+Tue Jan 27	Section P.2 # 37, 39, 41, 45, 50
+Wed Jan 28	Section P.5 # 3, 4, 5, 7, 15, 28, 35
+Thu Jan 29	Section P.4 # 1-6, 7-27 odd
+Mon Feb 2	Section 1.1 # 1, 7, 9, 11, 13
+Tue Feb 3	Section 1.1 # 27-35 odd
+Wed Feb 4	Section 1.2 # 1, 9, 11, 17, 24, 36
+Thu Feb 5	Section 1.2 # 13, 25, 29, 31, 41
+		Section 1.3 # 1, 11, 17, 24, 27
+Mon Feb 9	Section 1.4 # 1-9 odd
+Tue Feb 10	Section 1.4 # 13, 18, 21, 29, 30, 33
+Wed Feb 11	Section 1.5 # 1, 5, 11, 15, 21
+Thu Feb 12	Section 2.1 # 1, 2, 5, 15-20
+Mon Feb 16	Section 2.2 # 1, 5, 7, 9, 16, 18
+Tue Feb 17	Section 2.3 # 3, 5, 9, 13, 15, 22, 27
+Wed Feb 18	Section 2.4 # 1, 5, 7, 11
+Thu Feb 19	Section 2.5 # 3, 7, 13, 21, 27
+Fri Feb 20	Section P.6 # 1, 5, 13, 19, 21, try 48
+Mon Feb 23	Section 2.5 # 33, 37, 71
+Wed Feb 25	Section 2.6 # 7, 12, 13, 23, 28, 37, 39, 49, 55
+Mon Mar 1	Section 2.7 # 17, 19, 23, 31, 35
+Wed Mar 3	Section 3.1 # 1, 5, 17, 23, 37

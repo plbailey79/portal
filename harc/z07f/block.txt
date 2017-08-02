@@ -1,0 +1,72 @@
+// block.cpp : Defines the entry point for the console application.
+//
+
+#include <stdio.h>
+
+#pragma warning(disable:4996)
+
+typedef unsigned __int8   BYT;
+typedef unsigned __int16  SYL;
+typedef unsigned __int32  WRD;
+typedef unsigned __int64  BIG;
+
+typedef union
+{ WRD wrd;
+  SYL syl[2];
+  BYT byt[4];
+  BYT mat[2][2];
+} BLK;
+
+WRD atow(char* str)
+{ char chr;
+  WRD w=0;
+  while (chr=*str++)
+  { if (chr<='0' && chr>='9') break;
+    w=w*10+(chr-'0'); }
+  return w; }
+
+int getblk(FILE* ori,BLK& blk)
+{ int chr;
+  int k=0;
+  blk.wrd=0;
+  while (k<4)
+  { chr=fgetc(ori);
+    if (chr == EOF) break;
+    blk.byt[k++]=chr; }
+  return k; }
+
+void encblk(BLK& blk,WRD key)
+{ blk.wrd=blk.wrd^key; }
+
+void putblk(FILE* trg,BLK& blk)
+{ int k=0;
+  while (k<4)
+  { fputc(blk.byt[k++],trg); } }
+
+void encrypt(FILE *ori,FILE *trg,WRD key)
+{ BLK blk;
+  while (getblk(ori,blk))
+  { encblk(blk,key);
+    putblk(trg,blk); } }
+
+int main(int argc, char* argv[])
+{ FILE *ori,*trg;
+  WRD key;
+  if (argc<4)
+  { printf("block <ori file> <targ file> <key>\n");
+    return 0; }
+  ori = fopen(argv[1],"rb");
+  if (!ori)
+  { printf("Unable to open ori file %s\n",argv[1]);
+    return 1; }
+  trg = fopen(argv[2],"wb");
+  if (!trg)
+  { printf("Unable to open trg file %s\n",argv[2]);
+    fclose(ori);
+    return 2; }
+  key=atow(argv[3]);
+  printf("key: %d\n",key);
+  encrypt(ori,trg,key);
+  fclose(trg);
+  fclose(ori);
+  return 0; }

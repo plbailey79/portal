@@ -1,0 +1,103 @@
+// dehill.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#pragma warning(disable: 4996)  // Disable (nonstandard) "deprecated" warning
+#pragma warning(disable: 4267)  // Disable (nonstandard) int len=strlen(str) warning
+
+char chrupr(char chr)
+{ if (chr >= 'a' && chr <= 'z') return chr-'a'+'A';
+  if (chr >= 'A' && chr <= 'Z') return chr;
+  return 0; }
+
+char* strlet(char* ori)
+{ int len=strlen(ori);
+  char* ret = new char[len+1];
+  char* trg=ret;
+  char chr;
+  while (chr=*ori++) if (chr=chrupr(chr)) *trg++=chr;
+  *trg=0;
+  return ret; }
+
+int mulinv[26] =
+{ 0, 1, 0, 9, 0, 21, 0, 15, 0, 3, 0, 19, 0, 0,
+  0, 7, 0, 23, 0, 11, 0, 5, 0, 17, 0, 25 };
+
+int matdet(int* M)
+{ int d=(M[0]*M[3] - M[1]*M[2])%26;
+  if (d<0) d+=26;
+  return d; }
+
+void matvec(int* M,int* v,int* w)
+{ w[0] = (M[0]*v[0] + M[1]*v[1])%26;
+  w[1] = (M[2]*v[0] + M[3]*v[1])%26; }
+
+int matinv(int* M)
+{ int e=mulinv[matdet(M)];
+  if (e)
+  { int N[4];
+    N[0] = M[0]; N[1]=M[1]; N[2]=M[2]; N[3]= M[3];
+    M[0] = (e*N[3])%26;
+    M[1] = (e*(26-N[1]))%26;
+    M[2] = (e*(26-N[2]))%26;
+    M[3] = (e*N[0])%26; }
+  else
+  { M[0]=1; M[1]=0; M[2]=0; M[3]=1; } 
+  return e; }
+
+void keymat(int key,int* M)
+{ M[0]=(key/1000000)%26; M[1]=((key%1000000)/10000)%26;
+  M[2]=((key%10000)/100)%26; M[3]=(key%100)%26; }
+
+int keywas(int* M)
+{ return (M[0]%26)*1000000 + (M[1]%26)*10000 + (M[2]%26)*100 + (M[3]%26); }
+
+int dehill(char* pt,char* ct)
+{ int lp=strlen(pt);
+  int lc=strlen(ct);
+  int M[4];
+  int N[4];
+  int v[2];
+  int w[2];
+  while (1)
+  { if (lp < 4 || lc < 4) 
+    { printf("Error: out of text\n"); exit(1); }
+    M[0]=pt[0]-'A';
+    M[1]=pt[1]-'A';
+    M[2]=pt[2]-'A';
+    M[3]=pt[3]-'A';
+    if (matinv(M)) break;
+    pt+=2;
+    ct+=2;
+    lp-=2;
+    lc-=2; }
+  v[0]=ct[0]-'A';
+  v[1]=ct[2]-'A';
+  matvec(M,v,w);
+  N[0]=w[0];
+  N[1]=w[1];
+  v[0]=ct[1]-'A';
+  v[1]=ct[3]-'A';
+  matvec(M,v,w);
+  N[2]=w[0];
+  N[3]=w[1];
+  return keywas(N); }
+
+int main(int argc, char* argv[])
+{ char* pt;
+  char* ct;
+  int key;
+  if (argc<3)
+  { printf("dehill <plaintext> <ciphertext>\n");
+    return 0; }
+  pt = strlet(argv[1]);
+  ct = strlet(argv[2]);
+  key=dehill(pt,ct);
+  printf("plaintext: %s\nciphertext: %s\nkey: %d\n",argv[1],argv[2],key);
+  delete pt;
+  delete ct;
+	return 0; }

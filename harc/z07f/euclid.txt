@@ -1,0 +1,40 @@
+// euclid.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <stdlib.h>
+
+typedef unsigned int UNT;
+
+UNT euclid(UNT m,UNT n,int& x,int& y)
+{ int d,q,r,t;
+  x=1; y=0; q=n/m; r=n%m;
+  if (r==0) return m;
+  // printf("%d = (%d)(%d) + %d\n",n,m,q,r);
+  d=euclid(r,m,x,y);
+  t=x; x=y-q*x; y=t;
+  // printf("%d = (%d)(%d) + (%d)(%d)\n",d,x,m,y,n);
+  return d; }
+
+int euclid(int m,int n,int& x,int& y)
+{ UNT a=UNT(m),b=UNT(n);
+  int d=0;
+  if (m == 0 || n == 0)
+  { x=0; y=0; return 0; }
+  if (m<0) a=UNT(-m);
+  if (n<0) b=UNT(-n);
+  d=euclid(a,b,x,y);
+  if (m<0) x=-x;
+  if (n<0) y=-y;
+  return d; }
+
+int main(int argc, char* argv[])
+{ int m,n,x,y,d;
+  if (argc<3)
+  { printf("euclid <1st integer> <2nd integer>\n");
+    return 0; }
+  m=atoi(argv[1]);
+  n=atoi(argv[2]);
+  d=euclid(m,n,x,y);
+  printf("m: %d  n: %d  x: %d  y: %d  d: %d\n",m,n,x,y,d);
+	return 0; }

@@ -1,0 +1,57 @@
+// shif.cpp : Implements the shift cipher
+
+#include "stdafx.h"
+
+#include <stdlib.h>
+#include <string.h>
+
+#pragma warning(disable: 4996)  // Disable (nonstandard) "deprecated" warning
+#pragma warning(disable: 4267)  // Disable (nonstandard) int len=strlen(str) warning
+
+#define LINLEN 60
+
+char chrupr(char chr)
+{ if (chr >= 'a' && chr <= 'z') return chr-'a'+'A';
+  if (chr >= 'A' && chr <= 'Z') return chr;
+  return 0; }
+
+int keymak(char* str)
+{ int key=atoi(str)%26;
+  if (key<0) key+=26;
+  return key; }
+
+void shif(FILE *ori,FILE *trg,int key)
+{ int chr;
+  int ctr=0;
+  int b;
+  b=key%26;
+  while (1)
+  { chr=fgetc(ori);
+    if (chr==EOF) break;
+    if (chr=chrupr(chr)) 
+    { chr=(((chr-'A')+b)%26)+'A';
+      fputc(chr,trg); 
+      if (++ctr%LINLEN==0) fputc('\n',trg); } } 
+  if (ctr%LINLEN) fputc('\n',trg); }
+
+int main(int argc, char* argv[])
+{ FILE *ori,*trg;
+  int key;
+  if (argc<4)
+  { printf("SHIF <ori file> <targ file> <key>\n");
+    return 0; }
+  ori = fopen(argv[1],"rb");
+  if (!ori)
+  { printf("Unable to open ori file %s\n",argv[1]);
+    return 1; }
+  trg = fopen(argv[2],"wb");
+  if (!trg)
+  { printf("Unable to open trg file %s\n",argv[2]);
+    fclose(ori);
+    return 2; }
+  key=keymak(argv[3]);
+  printf("key: %d\n",key);
+  shif(ori,trg,key);
+  fclose(trg);
+  fclose(ori);
+	return 0; }
