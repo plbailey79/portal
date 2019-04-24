@@ -1,0 +1,58 @@
+
+
+        public static void Verbose(Block state, Key key)
+        {
+            Output("PLAINTEXT", state.ToString());
+            Output("KEY", key.ToString());
+
+            Output("R[00].input", state.ToHex());
+            Output("R[00].k_sch", key.RoundKey(0).ToHex());
+            AddRoundKey(state, key, 0);
+            for (int round = 1; round < Nr; round++)
+            {
+                Output(String.Format("R[{0}].start", round.ToString("D2")), state.ToHex());
+                SubBytes(state);
+                Output(String.Format("R[{0}].s_box", round.ToString("D2")), state.ToHex());
+                ShiftRows(state);
+                Output(String.Format("R[{0}].s_row", round.ToString("D2")), state.ToHex());
+                MixColumns(state);
+                Output(String.Format("R[{0}].m_col", round.ToString("D2")), state.ToHex());
+                AddRoundKey(state, key, round);
+            }
+            Output("R[10].start", state.ToHex());
+            SubBytes(state);
+            Output("R[10].s_box", state.ToHex());
+            ShiftRows(state);
+            Output("R[10].s_row", state.ToHex());
+            AddRoundKey(state, key, Nr);
+            Output("R[10].output", state.ToHex());
+        }
+
+        public static void InvVerbose(Block state, Key key)
+        {
+            Output(String.Format("R[10].output"), state.ToHex());
+            AddRoundKey(state, key, Nr);
+            for (int round = Nr - 1; round > 0; round--)
+            {
+                Output(String.Format("R[{0}].s_row", (round + 1).ToString("D2")), state.ToHex());
+                InvShiftRows(state);
+                Output(String.Format("R[{0}].s_box", (round + 1).ToString("D2")), state.ToHex());
+                InvSubBytes(state);
+                Output(String.Format("R[{0}].start", round.ToString("D2")), state.ToHex());
+                AddRoundKey(state, key, round);
+                Output(String.Format("R[{0}].m_col", round.ToString("D2")), state.ToHex());
+                InvMixColumns(state);
+            }
+            Output("R[01].s_row", state.ToHex());
+            InvShiftRows(state);
+            Output("R[01].s_box", state.ToHex());
+            InvSubBytes(state);
+            Output("R[01].start", state.ToHex());
+            AddRoundKey(state, key, 0);
+            Output("R[00].input", state.ToHex());
+        }
+
+        public static void Output(string label, string data)
+        {
+            Console.WriteLine("{0,-12}  {1}", label, data);
+        }
