@@ -1,0 +1,39 @@
+<html>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+<style type="text/css">
+.box {       
+        background-color:white;
+        color:blue;
+        font-weight:bold;
+        margin:120px auto;
+        height:60px;        
+        width: 400px;
+		border: 10px solid green ;
+    }
+</style>
+
+/* Two Columns */
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  <!-- height: 300px; /* Should be removed. Only for demonstration */ -->
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+</html>
