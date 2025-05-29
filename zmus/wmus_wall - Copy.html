@@ -17,37 +17,6 @@ Music
 Pink Floyd The Wall
 </font>&nbsp;</h2>
 
-    <h1>Click a song to start playing from there</h1>
-    <div id="audioLinks">
-        <a href="song1.mp3">Song 1 - Chill Vibes</a><br>
-        <a href="song2.mp3">Song 2 - Upbeat Tune</a><br>
-        <a href="song3.mp3">Song 3 - Relaxing Melody</a><br>
-        <a href="song4.mp3">Song 4 - Dramatic Score</a><br>
-    </div>
-
-    <script>
-        const audioLinks = document.querySelectorAll('#audioLinks a');
-
-        function playFromIndex(startIndex) {
-            audioLinks.forEach((link, index) => {
-                if (index >= startIndex) {
-                    setTimeout(() => {
-                        let audio = new Audio(link.href);
-                        audio.play();
-                    }, (index - startIndex) * 3000); // Stagger playback
-                }
-            });
-        }
-
-        // Attach event listeners to each song link
-        audioLinks.forEach((link, index) => {
-            link.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent default navigation
-                playFromIndex(index);
-            });
-        });
-    </script>
-
 <h3 font-size:  20px>
 <A href=".\Piano\Inflesh_20250410.m4a">In the Flesh?</A><br><br>
 <A href=".\Piano\Thinice_20250410.m4a">Thin Ice</A><br><br>
