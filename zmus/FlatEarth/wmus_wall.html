@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul L. Bailey, Ph.D. - Music Wall</title>
+</head>
+
+<body>
+<center>
+<h4 align="center"><font color="#3300cc">
+Paul L. Bailey, Ph.D.<br>
+Music
+</font>&nbsp;</h4>
+</center>
+
+<center>
+<h2 align="center"><font color="#009337">
+Pink Floyd The Wall
+</font>&nbsp;</h2>
+
+    <script>
+        const audioLinks = document.querySelectorAll('#audioLinks a');
+
+        function playFromIndex(startIndex) {
+            audioLinks.forEach((link, index) => {
+                if (index >= startIndex) {
+                    setTimeout(() => {
+                        let audio = new Audio(link.href);
+                        audio.play();
+                    }, (index - startIndex) * 3000); // Stagger playback
+                }
+            });
+        }
+
+        // Attach event listeners to each song link
+        audioLinks.forEach((link, index) => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default navigation
+                playFromIndex(index);
+            });
+        });
+    </script>
+
+<h3 font-size:  20px>
+<A href=".\Piano\Inflesh_20250410.m4a">In the Flesh?</A><br><br>
+<A href=".\Piano\Thinice_20250410.m4a">Thin Ice</A><br><br>
+<A href=".\Piano\Emptyspaces_20250408b.m4a">Empty Spaces</A><br><br>
+<A href=".\Piano\Oneturn_20250408b.m4a">One of my Turns</A><br><br>
+<A href=".\Piano\Dontleave_20250408.m4a">Don't Leave Me Now</A><br><br>
+<A href=".\Piano\Anotherbrick_20250408.m4a">Another Brick in the Wall</A><br><br>
+<A href=".\Piano\Goodbye_20250410.m4a">Goodbye Cruel World</A><br><br>
+<A href=".\Piano\Heyou_20250226.m4a">Hey You</A><br><br>
+<A href=".\Piano\Nobodyhome_20250409.m4a">Nobody Home</A><br><br>
+<A href=".\Piano\Comfinum_20250407b.m4a">Comfortably Numb</A><br><br>
+<A href=".\Piano\Outerwall_20250410.m4a">Outside the Wall</A><br><br>
+</h3>
+</center>
+
+</body>
+</html>
