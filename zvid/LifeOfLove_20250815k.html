@@ -2,6 +2,40 @@
 <head>
 <link rel="icon" type="image/x-icon" href="./favicon.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px; /* Optional: limit width on desktop */
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      max-height: 90vh; /* Prevents overflow on tall screens */
+      border: 0;
+    }
+</style> 
+<style>
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  </style>
 <title>Paul L. Bailey - Videos</title>
 </head>
 
@@ -14,6 +48,7 @@ Life Of Love (Une vie d'amour) in English<br>
 </center>
 
 <center>
+<div class="video-container">
 <iframe width="600" height="400" 
         src="https://www.youtube.com/embed/UHooDcb6Z88"
         title="YouTube video player" 
@@ -21,6 +56,7 @@ Life Of Love (Une vie d'amour) in English<br>
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen>
 </iframe>
+</div>
 </center>
 
 </body>
