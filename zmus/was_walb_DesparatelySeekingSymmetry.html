@@ -1,0 +1,229 @@
+<html>
+<head>
+<link rel="icon" type="image/x-icon" href="./favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+	.parent 
+	{
+		display: flex;
+		justify-content: center;  /* centers child horizontally */
+	}
+    .oldcontainer 
+	{
+      display: flex;
+      align-items: center;       /* Vertically center */
+      justify-content: flex-start; /* Align items to the left */
+      gap: 20px;                 /* Space between image and text */
+      min-height: 90px;         /* Ensures vertical space for centering */
+      border: 1px solid cornflowerblue;    /* Visual aid */
+      padding: 10px;
+	  width: 256px;
+	  border-radius: 8px;
+    }
+	
+	.container
+	{
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 20px;
+		min-height: 90px;
+		border: 1px solid cornflowerblue;
+		padding: 10px;
+		width: 100%;                 /* ← changed from 256px */
+		max-width: 600px;            /* ← added to control max width */
+		margin: 0 auto;              /* ← added to center horizontally */
+		border-radius: 8px;
+	}
+</style>
+<script>
+    function createRitualBlock({ imageSrc, audioSrc, labelText }) {
+      const container = document.createElement('div');
+      container.className = 'container';
+
+      const img = document.createElement('img');
+      img.src = imageSrc;
+      img.alt = 'Cover Art';
+      img.width = 128;
+
+      const label = document.createElement('p');
+      label.innerHTML = labelText;
+      label.style.cssText = `
+        margin: 0 0 10px 0;
+        font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #4B0082;
+        background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+        padding: 6px 12px;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        text-align: center;
+      `;
+
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.style.width = '100%';
+
+      const source = document.createElement('source');
+      source.src = audioSrc;
+      source.type = 'audio/mpeg';
+      audio.appendChild(source);
+
+      const audioWrapper = document.createElement('div');
+      audioWrapper.style.cssText = 'display: flex; flex-direction: column; width: 100%;';
+      audioWrapper.appendChild(label);
+      audioWrapper.appendChild(audio);
+
+      container.appendChild(img);
+      container.appendChild(audioWrapper);
+
+      document.body.appendChild(container);
+    }
+</script>
+<title>
+	Symmetric Difference - Desparately Seeking Symmetry
+</title>
+</head>
+
+<body>
+<center>
+<h4 align="center"><font color="#3300cc">
+	Symmetric Difference<br>
+	Desparately Seeking Symmetry
+</font>&nbsp;</h4>
+</center>
+
+<center>
+<img src=".\Art\DesparatelySeekingSymmetry_20251003.jpg" alt="Desparately Seeking Symmetry" width="200"> 
+</center>
+
+<br>  
+<script>
+    createRitualBlock({
+      imageSrc: './Art/Totoro_20251001.jpg',
+      audioSrc: './DesparatelySeekingSymmetry/Totoro_20251003m.wav',
+      labelText: '&#10625; Totoro &#10625;'
+    });
+    createRitualBlock({
+      imageSrc: './Art/MyLove_20250911.png',
+      audioSrc: './DesparatelySeekingSymmetry/MyLove_20250930w.wav',
+      labelText: '&#10625; My Love &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/AllMyLoving_20250926c.jpg',
+      audioSrc: './DesparatelySeekingSymmetry/AllMyLoving_20250926o.wav',
+      labelText: '&#10625; All My Loving &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/BecauseTheNight_20250908.png',
+      audioSrc: './DesparatelySeekingSymmetry/BecauseTheNight_20250922s.wav',
+      labelText: '&#10625; Because the Night&#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/WithoutYou_20250920a.png',
+      audioSrc: './DesparatelySeekingSymmetry/WithoutYou_20250922s.wav',
+      labelText: '&#10625; Without You &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/BeingInLove_20250924.png',
+      audioSrc: './DesparatelySeekingSymmetry/BeingInLove_20251001k.wav',
+      labelText: '&#10625; Being in Love &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/ILovedYouOnceInSilence_20250917.png',
+      audioSrc: './DesparatelySeekingSymmetry/ILovedYouOnceInSilence_20250930t.wav',
+      labelText: '&#10625; I Loved You Once In Silence &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/Somewhere_20250909.png',
+      audioSrc: './DesparatelySeekingSymmetry/Somewhere_20250922s.wav',
+      labelText: '&#10625; Somewhere &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/FlyMeToTheMoon_20250914.png',
+      audioSrc: './DesparatelySeekingSymmetry/FlyMeToTheMoon_20250928t.wav',
+      labelText: '&#10625; Fly Me to the Moon &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/MindWind_20250708.jpg',
+      audioSrc: './DesparatelySeekingSymmetry/WindmillsOfYourMind_20250922s.wav',
+      labelText: '&#10625; Windmills of Your Mind &#10625; '
+    });
+    createRitualBlock({
+      imageSrc: './Art/LifeOfLove_20250922b.png',
+      audioSrc: './DesparatelySeekingSymmetry/LifeOfLove_20250922s',
+      labelText: '&#10625; Life of Love &#10625; '
+    });
+</script>
+  
+  
+</body>
+</html>
+
+<!--
+
+.\DesparatelySeekingSymmetry\AllMyLoving_20250926o.wav
+  
+<div class="container">
+  <img src=".\Art\Totoro_20251001.jpg" alt="Cover Art" width="200">
+
+  <div style="display: flex; flex-direction: column; width: 100%;">
+	<p style="
+		margin: 0 0 10px 0;
+		font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+		font-size: 1.4em;
+		font-weight: bold;
+		color: #4B0082;
+		background: linear-gradient(to right, #e0c3fc, #8ec5fc);
+		padding: 6px 12px;
+		border-radius: 6px;
+		box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+		text-align: center;">
+		&#9791;&#10070;&#9790; Totoro &#9791;&#10070;&#9790;
+	</p>
+    <audio controls style="width: 100%;">
+      <source src=".\DesparatelySeekingSymmetry\Totoro_20251003m.wav" type="audio/mpeg">
+      Unsupported audio.
+    </audio>
+  </div>
+</div>
+
+      labelText: '&#9791;&#10070;&#9790; My Love &#9791;&#10070;&#9790;'
+    .container audio
+	{
+      width: 100%;
+      height: auto;
+    }
+	
+    .container img 
+	{
+      width: 80px;
+      height: auto;
+    }
+
+    .text 
+	{
+      font-size: 18px;
+    }
+
+<center>
+<h3 font-size:  20px>
+<A href=".\DesparatelySeekingSymmetry\Totoro_20251003m.wav">Totoro</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\MyLove_20250930w.wav">My Love</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\AllMyLoving_20250926o.wav">All My Loving</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\BecauseTheNight_20250922s.wav">Because the Night</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\WithoutYou_20250922s.wav">Without You</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\BeingInLove_20251001k.wav">Being In Love</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\ILovedYouOnceInSilence_20250930t.wav">I Love You Once In Silence</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\Somewhere_20250922s.wav">Somewhere</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\FlyMeToTheMoon_20250928t.wav">Fly Me To The Moon</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\WindmillsOfYourMind_20250922s.wav">Windmills of your Mind</A><br><br>
+<A href=".\DesparatelySeekingSymmetry\LifeOfLove_20250922s.wav">Life of Love</A><br><br>
+</h3>
+</center>
+</body>
+</html>
+
+	
+	-->

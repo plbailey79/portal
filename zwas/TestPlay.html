@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio Player with Image</title>
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    img {
+      max-width: 300px;
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    audio {
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src=".\Art\Totoro_20251001.jpg" alt="Cover Art">
+    <audio controls>
+      <source src=".\DesparatelySeekingSymmetry\Totoro_20251003m.wav" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+</body>
+</html>
+
+
+<!--
+    <h1>Click the Image to Play Audio</h1>
+    <img src=".\Art\Totoro_20251001.jpg" alt="Clickable Image" width="200" id="playImage">
+    <audio id="audioPlayer" src="Totoro_20251003m.wav"></audio>
+
+    <script>
+        const image = document.getElementById('playImage');
+        const audio = document.getElementById('audioPlayer');
+
+        image.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        });
+    </script>
+	
+	-->
